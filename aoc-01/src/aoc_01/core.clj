@@ -20,6 +20,7 @@
 (defn calc-result [data]
   (loop [input data
          x 0
+         aim 0
          depth 0]         
     (if (empty? input)
       {:x x
@@ -30,11 +31,17 @@
          (if (= dir "forward") 
            (+ x amount) 
            x)
+
          (if (= dir "down")
-           (+ depth amount)
+           (+ aim amount)
            (if (= dir "up")
-             (- depth amount)
-             depth)))))))
+             (- aim amount)
+             aim))
+         
+         (if (= dir "forward")
+           (+ depth (* aim amount))
+           depth))))))
+         
 
 (calc-result example-data)
 (def res (calc-result data))

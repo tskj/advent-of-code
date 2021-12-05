@@ -1677,3 +1677,38 @@ clj꞉aoc-01.core꞉> 
 clj꞉aoc-01.core꞉> 
 1989265
 clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+1989265
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+0
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+0
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+2089174012
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+2089174012
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+2089174012
+clj꞉aoc-01.core꞉> 
+{:x 15, :depth 60}
+clj꞉aoc-01.core꞉> 
+{:x 15, :depth 60}
+clj꞉aoc-01.core꞉> 
+{:x 15, :depth 60}
+clj꞉aoc-01.core꞉> 
+{:x 15, :depth 60}
+clj꞉aoc-01.core꞉> 
+#'aoc-01.core/res
+clj꞉aoc-01.core꞉> 
+{:x 2083, :depth 1002964}
+clj꞉aoc-01.core꞉> 
+2089174012
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+2089174012
+clj꞉aoc-01.core꞉> 
