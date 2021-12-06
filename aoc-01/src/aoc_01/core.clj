@@ -2,47 +2,77 @@
   (:gen-class)
   (:require [clojure.string :as str]))
 
-(def data 
+(def data
   (->> "./data/input.txt"
-   (slurp)
-   (str/split-lines)
-   (map #(str/split % #" "))
-   (map (fn [[dir amount]] [dir (Integer/parseInt amount)]))))
+       (slurp)
+       (str/split-lines)))
 
 (def example-data
-  [["forward" 5]
-   ["down" 5]
-   ["forward" 8]
-   ["up" 3]
-   ["down" 8]
-   ["forward" 2]])
+  ["00100"
+   "11110"
+   "10110"
+   "10111"
+   "10101"
+   "01111"
+   "00111"
+   "11100"
+   "10000"
+   "11001"
+   "00010"
+   "01010"])
 
-(defn calc-result [data]
-  (loop [input data
-         x 0
-         aim 0
-         depth 0]         
-    (if (empty? input)
-      {:x x
-       :depth depth}       
-      (let [[dir amount] (first input)]
-        (recur
-         (rest input)       
-         (if (= dir "forward") 
-           (+ x amount) 
-           x)
+(defn to-binary [list-of-strs]
+  (->> list-of-strs
+       (map #(str/split % #""))
+       (map #(map (fn [i] (Integer/parseInt i)) %))))
 
-         (if (= dir "down")
-           (+ aim amount)
-           (if (= dir "up")
-             (- aim amount)
-             aim))
-         
-         (if (= dir "forward")
-           (+ depth (* aim amount))
-           depth))))))
-         
+(def example-binary (to-binary example-data))
+(def binary (to-binary data))
 
-(calc-result example-data)
-(def res (calc-result data))
-(* (res :x) (res :depth))
+(defn to-decimal [binary]
+  (loop [bin (reverse binary)
+         power 0
+         res 0]
+    (if (empty? bin)
+      res
+      (recur
+       (rest bin)
+       (+ power 1)
+       (+ res (* (first bin) (Math/pow 2 power)))))))
+
+(def example-dec (map to-decimal example-binary))
+
+(defn transpose [list-of-lists]
+  (loop [old-matrix list-of-lists
+         new-matrix []]
+    (if (every? empty? old-matrix)
+      new-matrix
+      (recur
+        (map rest old-matrix)       
+        (conj new-matrix (map first old-matrix))))))
+
+(defn gamma-rate [input]
+  (let [number-of-1-bits (->> input
+                              (transpose)
+                              (map #(filter odd? %))
+                              (map count))]
+    (map
+     #(if (> (* 2 %) (count input)) 1 0)
+     number-of-1-bits)))
+
+(defn flip-bits [binary]
+  (map 
+   #(if (= 0 %) 1 0)
+   binary))
+
+(defn epsilon-rate-from-gamma [gamma]
+  (flip-bits gamma))
+
+(defn calc [binary]
+  (let [gamma-rate (gamma-rate binary)
+        epsilon-rate (epsilon-rate-from-gamma gamma-rate)]
+    (* (to-decimal gamma-rate)
+       (to-decimal epsilon-rate))))
+
+(calc example-binary)
+(calc binary)
