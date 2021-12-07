@@ -71,11 +71,11 @@
             updated-boards (map #(draw-number drawn-number %) active-boards)
             current-winner (find-first winner? updated-boards)]
         (print drawn-number "\n")
-        (if (not (= nil current-winner))
+        (if (and current-winner (= 1 (count active-boards)))
           {:winner current-winner
            :winning-number drawn-number}
           (recur
-           updated-boards       
+           (remove winner? updated-boards)
            rest-of-numbers))))))
 
 (* (winner :winning-number)
