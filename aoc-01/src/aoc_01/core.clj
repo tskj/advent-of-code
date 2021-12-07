@@ -68,11 +68,40 @@
 (defn epsilon-rate-from-gamma [gamma]
   (flip-bits gamma))
 
-(defn calc [binary]
-  (let [gamma-rate (gamma-rate binary)
-        epsilon-rate (epsilon-rate-from-gamma gamma-rate)]
-    (* (to-decimal gamma-rate)
-       (to-decimal epsilon-rate))))
+;; bit-criteria: list-of-bits, current-bit -> bool
+;; data: example binary data or actual binary data
+(defn calc [bit-criteria data]
+  (loop [index-to-consier 0
+         current-data-set data]
+    (let [pred (fn [data-point]
+                 (bit-criteria (nth (transpose current-data-set) index-to-consier) 
+                               (nth data-point index-to-consier)))]                 
+      (if (= 1 (count current-data-set))
+        (first current-data-set)
+        (recur 
+         (+ index-to-consier 1)       
+         (filter pred current-data-set))))))
 
-(calc example-binary)
-(calc binary)
+(defn oxygen-rating [bits current-bit]
+  (let [zeroes (count (filter #(= 0 %) bits))
+        ones (count (filter #(= 1 %) bits))]
+   (if (= zeroes ones)
+      (= current-bit 1)
+      (if (> zeroes ones)
+         (= current-bit 0)
+         (= current-bit 1)))))
+
+(defn scrubber-rating [bits current-bit]
+  (let [zeroes (count (filter #(= 0 %) bits))
+        ones (count (filter #(= 1 %) bits))]
+    (if (= zeroes ones)
+      (= current-bit 0)
+      (if (< zeroes ones)
+        (= current-bit 0)
+        (= current-bit 1)))))
+
+(calc oxygen-rating example-binary)
+(calc scrubber-rating example-binary)
+
+(* (to-decimal (calc oxygen-rating binary))
+   (to-decimal (calc scrubber-rating binary)))
