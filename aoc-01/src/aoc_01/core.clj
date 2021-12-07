@@ -2,45 +2,19 @@
   (:gen-class)
   (:require [clojure.string :as str]))
 
+;; (def input-file "./data/example.txt")
+(def input-file "./data/input.txt")
+
 (def data
-  (->> "./data/input.txt"
+  (->> input-file
        (slurp)
        (str/split-lines)))
 
-(def example-data
-  ["00100"
-   "11110"
-   "10110"
-   "10111"
-   "10101"
-   "01111"
-   "00111"
-   "11100"
-   "10000"
-   "11001"
-   "00010"
-   "01010"])
-
-(defn to-binary [list-of-strs]
-  (->> list-of-strs
-       (map #(str/split % #""))
-       (map #(map (fn [i] (Integer/parseInt i)) %))))
-
-(def example-binary (to-binary example-data))
-(def binary (to-binary data))
-
-(defn to-decimal [binary]
-  (loop [bin (reverse binary)
-         power 0
-         res 0]
-    (if (empty? bin)
-      res
-      (recur
-       (rest bin)
-       (+ power 1)
-       (+ res (* (first bin) (Math/pow 2 power)))))))
-
-(def example-dec (map to-decimal example-binary))
+(def drawn-numbers
+  (map #(Integer/parseInt %) 
+       (-> data 
+           (first)  
+           (str/split #","))))
 
 (defn transpose [list-of-lists]
   (loop [old-matrix list-of-lists
@@ -51,57 +25,63 @@
         (map rest old-matrix)       
         (conj new-matrix (map first old-matrix))))))
 
-(defn gamma-rate [input]
-  (let [number-of-1-bits (->> input
-                              (transpose)
-                              (map #(filter odd? %))
-                              (map count))]
-    (map
-     #(if (> (* 2 %) (count input)) 1 0)
-     number-of-1-bits)))
+(def boards 
+  (->> data
+       (rest)
+       (remove empty?)
+       (partition 5)  
+       (map 
+        (fn [board]
+          (map 
+           (fn [row] 
+             (map (fn [n] {:drawn false
+                           :number (Integer/parseInt n)}) 
+                  (remove empty? (str/split row #" "))))
+           board)))))
 
-(defn flip-bits [binary]
-  (map 
-   #(if (= 0 %) 1 0)
-   binary))
+(defn draw-number [n board]
+  (map
+   (fn [row]
+     (map 
+      (fn [cell]
+        {:drawn (or (cell :drawn) (= n (cell :number)))
+         :number (cell :number)})
+      row))      
+   board))   
 
-(defn epsilon-rate-from-gamma [gamma]
-  (flip-bits gamma))
+(defn bingo? [row]
+  (every? :drawn row))
 
-;; bit-criteria: list-of-bits, current-bit -> bool
-;; data: example binary data or actual binary data
-(defn calc [bit-criteria data]
-  (loop [index-to-consier 0
-         current-data-set data]
-    (let [pred (fn [data-point]
-                 (bit-criteria (nth (transpose current-data-set) index-to-consier) 
-                               (nth data-point index-to-consier)))]                 
-      (if (= 1 (count current-data-set))
-        (first current-data-set)
-        (recur 
-         (+ index-to-consier 1)       
-         (filter pred current-data-set))))))
+(defn winner? [board]
+  (or 
+   (some bingo? board)   
+   (some bingo?(transpose board))))
 
-(defn oxygen-rating [bits current-bit]
-  (let [zeroes (count (filter #(= 0 %) bits))
-        ones (count (filter #(= 1 %) bits))]
-   (if (= zeroes ones)
-      (= current-bit 1)
-      (if (> zeroes ones)
-         (= current-bit 0)
-         (= current-bit 1)))))
+(defn find-first [f seq]
+  (first (filter f seq)))
 
-(defn scrubber-rating [bits current-bit]
-  (let [zeroes (count (filter #(= 0 %) bits))
-        ones (count (filter #(= 1 %) bits))]
-    (if (= zeroes ones)
-      (= current-bit 0)
-      (if (< zeroes ones)
-        (= current-bit 0)
-        (= current-bit 1)))))
+(def winner 
+  (loop [active-boards boards
+         numbers-to-draw drawn-numbers]
+    (if (empty? numbers-to-draw)
+      {:winner nil
+       :winning-number nil}
+      (let [drawn-number (first numbers-to-draw)
+            rest-of-numbers (rest numbers-to-draw)
+            updated-boards (map #(draw-number drawn-number %) active-boards)
+            current-winner (find-first winner? updated-boards)]
+        (print drawn-number "\n")
+        (if (not (= nil current-winner))
+          {:winner current-winner
+           :winning-number drawn-number}
+          (recur
+           updated-boards       
+           rest-of-numbers))))))
 
-(calc oxygen-rating example-binary)
-(calc scrubber-rating example-binary)
-
-(* (to-decimal (calc oxygen-rating binary))
-   (to-decimal (calc scrubber-rating binary)))
+(* (winner :winning-number)
+   (->> winner
+     (:winner)
+     (flatten)
+     (remove :drawn)
+     (map :number)
+     (reduce +)))
