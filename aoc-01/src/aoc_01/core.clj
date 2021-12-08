@@ -17,14 +17,29 @@
          (:y (:end segment)))))
 
 (defn on-line? [point line]
-  ;; Only works on horizontal-or-vertical? lines
-  (if (= (:x point) (:x (:start line)))
-    (or (<= (:y (:start line)) (:y point) (:y (:end line)))
-        (<= (:y (:end line)) (:y point) (:y (:start line))))
-    (if (= (:y point) (:y (:start line)))
-      (or (<= (:x (:start line)) (:x point) (:x (:end line)))
-          (<= (:x (:end line)) (:x point) (:x (:start line))))
-      false)))
+  (if (horizontal-or-veritcal? line) 
+    (if (= (:x point) (:x (:start line)))
+      (or (<= (:y (:start line)) (:y point) (:y (:end line)))
+          (<= (:y (:end line)) (:y point) (:y (:start line))))
+      (if (= (:y point) (:y (:start line)))
+        (or (<= (:x (:start line)) (:x point) (:x (:end line)))
+            (<= (:x (:end line)) (:x point) (:x (:start line))))
+        false))
+    (let [line-start-x (:x (:start line)) 
+          line-end-x   (:x (:end line))
+          line-start-y (:y (:start line))
+          line-end-y   (:y (:end line))]
+      (and 
+       (= (Math/abs (- line-end-y line-start-y))
+          (Math/abs (- line-end-x line-start-x)))
+       (and (or 
+             (<= line-start-x (:x point) line-end-x)
+             (>= line-start-x (:x point) line-end-x))
+            (or
+             (<= line-start-y (:y point) line-end-y)
+             (>= line-start-y (:y point) line-end-y)))
+       (= (Math/abs (- (:y point) line-start-y))
+          (Math/abs (- (:x point) line-start-x)))))))
 
 (def line-segments
   (->> input-file
@@ -33,8 +48,7 @@
        (map #(str/split % #" "))
        (map (fn [coords] 
               {:start (parse-coorindate (first coords))
-               :end (parse-coorindate (last coords))}))
-       (filter horizontal-or-veritcal?)))
+               :end (parse-coorindate (last coords))}))))
 
 (def corners
   (let [all-points (concat 
@@ -58,10 +72,11 @@
 (def overlapping-points
   (filter 
    (fn [point] 
-     (<= 2 (count (filter
-                   (fn [line] 
-                     (on-line? point line)) 
-                   line-segments)))) 
+     (print point "\n")
+     (<= 2 (count (take 2 (filter
+                           (fn [line]
+                             (on-line? point line))
+                           line-segments))))) 
    cartesian-plane))
 
 (count overlapping-points)
