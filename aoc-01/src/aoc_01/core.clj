@@ -5,83 +5,63 @@
 ;; (def input-file "./data/example.txt")
 (def input-file "./data/input.txt")
 
-(def data
+(defn parse-coorindate [coord]
+  (let [[x y] (str/split coord #",")]
+    {:x (Integer/parseInt x)
+     :y (Integer/parseInt y)}))
+
+(defn horizontal-or-veritcal? [segment]
+  (or (= (:x (:start segment))
+         (:x (:end segment)))
+      (= (:y (:start segment))
+         (:y (:end segment)))))
+
+(defn on-line? [point line]
+  ;; Only works on horizontal-or-vertical? lines
+  (if (= (:x point) (:x (:start line)))
+    (or (<= (:y (:start line)) (:y point) (:y (:end line)))
+        (<= (:y (:end line)) (:y point) (:y (:start line))))
+    (if (= (:y point) (:y (:start line)))
+      (or (<= (:x (:start line)) (:x point) (:x (:end line)))
+          (<= (:x (:end line)) (:x point) (:x (:start line))))
+      false)))
+
+(def line-segments
   (->> input-file
        (slurp)
-       (str/split-lines)))
+       (str/split-lines)
+       (map #(str/split % #" "))
+       (map (fn [coords] 
+              {:start (parse-coorindate (first coords))
+               :end (parse-coorindate (last coords))}))
+       (filter horizontal-or-veritcal?)))
 
-(def drawn-numbers
-  (map #(Integer/parseInt %) 
-       (-> data 
-           (first)  
-           (str/split #","))))
+(def corners
+  (let [all-points (concat 
+                    (map :start line-segments) 
+                    (map :end line-segments))
+        start-point {:x (apply min (map :x all-points))
+                     :y (apply min (map :y all-points))}
+        end-point {:x (apply max (map :x all-points))
+                   :y (apply max (map :y all-points))}]
+    {:start start-point :end end-point}))
 
-(defn transpose [list-of-lists]
-  (loop [old-matrix list-of-lists
-         new-matrix []]
-    (if (every? empty? old-matrix)
-      new-matrix
-      (recur
-        (map rest old-matrix)       
-        (conj new-matrix (map first old-matrix))))))
+(def cartesian-plane
+  (->> (range (:x (:start corners)) (+ 1 (:x (:end corners))))
+       (mapcat 
+        (fn [x]
+          (->> (range (:y (:start corners)) (+ 1 (:y (:end corners))))
+               (map 
+                (fn [y]
+                  {:x x :y y})))))))
 
-(def boards 
-  (->> data
-       (rest)
-       (remove empty?)
-       (partition 5)  
-       (map 
-        (fn [board]
-          (map 
-           (fn [row] 
-             (map (fn [n] {:drawn false
-                           :number (Integer/parseInt n)}) 
-                  (remove empty? (str/split row #" "))))
-           board)))))
+(def overlapping-points
+  (filter 
+   (fn [point] 
+     (<= 2 (count (filter
+                   (fn [line] 
+                     (on-line? point line)) 
+                   line-segments)))) 
+   cartesian-plane))
 
-(defn draw-number [n board]
-  (map
-   (fn [row]
-     (map 
-      (fn [cell]
-        {:drawn (or (cell :drawn) (= n (cell :number)))
-         :number (cell :number)})
-      row))      
-   board))   
-
-(defn bingo? [row]
-  (every? :drawn row))
-
-(defn winner? [board]
-  (or 
-   (some bingo? board)   
-   (some bingo?(transpose board))))
-
-(defn find-first [f seq]
-  (first (filter f seq)))
-
-(def winner 
-  (loop [active-boards boards
-         numbers-to-draw drawn-numbers]
-    (if (empty? numbers-to-draw)
-      {:winner nil
-       :winning-number nil}
-      (let [drawn-number (first numbers-to-draw)
-            rest-of-numbers (rest numbers-to-draw)
-            updated-boards (map #(draw-number drawn-number %) active-boards)
-            current-winner (find-first winner? updated-boards)]
-        (print drawn-number "\n")
-        (if (and current-winner (= 1 (count active-boards)))
-          {:winner current-winner
-           :winning-number drawn-number}
-          (recur
-           (remove winner? updated-boards)
-           rest-of-numbers))))))
-
-(* (winner :winning-number)
-   (->> winner
-     (:winner)
-     (flatten)
-     (remove :drawn)
-     (map :number)
-     (reduce +)))
+(count overlapping-points)

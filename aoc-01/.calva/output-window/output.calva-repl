@@ -15,1976 +15,611 @@
 ;   - `alt+up` and `alt+down` traverse up and down the REPL command history
 ;      when the cursor is after the last contents at the prompt
 ;   - Clojure lines in stack traces are peekable and clickable.
-clj꞉aoc-01.core꞉> 
+clj꞉aoc-01.core꞉>  ; Use `alt+enter` to evaluate
 ; Jack-in done.
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-#'aoc-01.core/find-first
+"./data/example.txt"
 clj꞉aoc-01.core꞉> 
-(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)
+"./data/example.txt"
 clj꞉aoc-01.core꞉> 
-#function[clojure.core/empty]
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+#function[aoc-01.core/parse-coorindate]
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+#'aoc-01.core/data
 clj꞉aoc-01.core꞉> 
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-hei(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(16 13 6 15 25 12 22 18 20 8 19 3 26 1)hei(13 6 15 25 12 22 18 20 8 19 3 26 1)hei(6 15 25 12 22 18 20 8 19 3 26 1)hei(15 25 12 22 18 20 8 19 3 26 1)hei(25 12 22 18 20 8 19 3 26 1)hei(12 22 18 20 8 19 3 26 1)hei(22 18 20 8 19 3 26
- 1)hei(18 20 8 19 3 26 1)hei(20 8 19 3 26 1)hei(8 19 3 26 1)hei(19 3 26 1)hei(3 26 1)hei(26 1)hei(1)hei()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(16 13 6 15 25 12 22 18 20 8 19 3 26 1)(13 6 15 25 12 22 18 20 8 19 3 26 1)(6 15 25 12 22 18 20 8 19 3 26 1)(15 25 12 22 18 20 8 19 3 26 1)(25 12 22 18 20 8 19 3 26 1)(12 22 18 20 8 19 3 26 1)(22 18 20 8 19 3 26 1)(18 20 8 19 3 26 1)(20 8 19 3 26 1)(8 19 3 26 1)(19 3 26 
-1)(3 26 1)(26 1)(1)()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)(16 13 6 15 25 12 22 18 20 8 19 3 26 1)(13 6 15 25 12 22 18 20 8 19 3 26 1)(6 15 25 12 22 18 20 8 19 3 26 1)(15 25 12 22 18 20 8 19 3 26 1)(25 12 22 18 20 8 19 3 26 1)(12 22 18 20 8 19 3 26 1)(22 18 20 8 19 3 26 1)(18 20 8 19 3 26 1)(20 8 19 3 26 1)(8 19 3 26 1)(19 3 26 
-1)(3 26 1)(26 1)(1)()
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-; Syntax error (ClassCastException) compiling at (core.clj:53:1).
-; class java.lang.Integer cannot be cast to class clojure.lang.IFn (java.lang.Integer is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-; Syntax error (ClassCastException) compiling at (core.clj:53:1).
-; class java.lang.Integer cannot be cast to class clojure.lang.IFn (java.lang.Integer is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
+#'aoc-01.core/data
 clj꞉aoc-01.core꞉> 
+#function[aoc-01.core/on-line?]
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-; Syntax error (ClassCastException) compiling at (core.clj:53:1).
-; class java.lang.Integer cannot be cast to class clojure.lang.IFn (java.lang.Integer is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-74951117232014212410161361525122218208193261
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-; Syntax error compiling if at (core.clj:64:7).
-; Too many arguments to if
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-; Syntax error compiling if at (core.clj:64:7).
-; Too many arguments to if
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-; Syntax error compiling if at (core.clj:64:7).
-; Too many arguments to if
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{
-:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}7
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :numb
-er 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :numbe
-r 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}4
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :nu
-mber 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :
-number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}9
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false
-, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn fal
-se, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}5
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn fa
-lse, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn
- false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}11
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:dra
-wn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{
-:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}17
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{
-:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :numb
-er 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}23
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :numbe
-r 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :n
-umber 3}{:drawn false, :number 7}2
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :nu
-mber 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}0
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn fal
-se, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn fals
-e, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}14
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn
- false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:draw
-n false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}21
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:
-drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}
-{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}24
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 
-3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :numb
-er 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}10
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :num
-ber 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, 
-:number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}16
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false
-, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn 
-false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}13
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn f
-alse, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:dra
-wn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}6
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:dra
-wn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}15
-{:drawn false, :number 22}{:drawn false, :number 1
-3}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11
-}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}25
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :num
-ber 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :num
-ber 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}12
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false,
- :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false
-, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}22
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn fa
-lse, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn
- false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}18
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:draw
-n false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{
-:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}20
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}
-{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :numbe
-r 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}8
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number
- 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :n
-umber 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}19
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :n
-umber 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}3
-{:drawn fals
-e, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:drawn false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false
-, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}26
-{:drawn false, :number 22}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 11}{:drawn false, :number 0}{:draw
-n false, :number 8}{:drawn false, :number 2}{:drawn false, :number 23}{:drawn false, :number 4}{:drawn false, :number 24}{:drawn false, :number 21}{:drawn false, :number 9}{:drawn false, :number 14}{:drawn false, :number 16}{:drawn false, :number 7}{:drawn false, :number 6}{:drawn false, :number 10}{:drawn false, :number 3}{:drawn false, :number 18}{:drawn false, :number 5}{:drawn false, :number 1}{:drawn false, :number 12}{:drawn false, :number 20}{:drawn false, :number 15}{:drawn false, :number 19}{:drawn false, :number 3}{:drawn false, :number 15}{:drawn false, :number 0}{:drawn false, :number 2}{:drawn false, :number 22}{:drawn false, :number 9}{:drawn false, :number 18}{:drawn false, :number 13}{:drawn false, :number 17}{:drawn false, :number 5}{:drawn false, :number 19}{:drawn false, :number 8}{:drawn false, :number 7}{:drawn false, :number 25}{:drawn false, :number 23}{:drawn false, :number 20}{:drawn false, :number 11}{:drawn false, :number 10}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn
- false, :number 14}{:drawn false, :number 21}{:drawn false, :number 16}{:drawn false, :number 12}{:drawn false, :number 6}{:drawn false, :number 14}{:drawn false, :number 21}{:drawn false, :number 17}{:drawn false, :number 24}{:drawn false, :number 4}{:drawn false, :number 10}{:drawn false, :number 16}{:drawn false, :number 15}{:drawn false, :number 9}{:drawn false, :number 19}{:drawn false, :number 18}{:drawn false, :number 8}{:drawn false, :number 23}{:drawn false, :number 26}{:drawn false, :number 20}{:drawn false, :number 22}{:drawn false, :number 11}{:drawn false, :number 13}{:drawn false, :number 6}{:drawn false, :number 5}{:drawn false, :number 2}{:drawn false, :number 0}{:drawn false, :number 12}{:drawn false, :number 3}{:drawn false, :number 7}1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, 
-:number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:drawn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn f
-alse, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse7
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse4
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse9
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse5
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse11
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefa
-lsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse17
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse23
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse2
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefal
-sefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse0
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse14
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefa
-lsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse21
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse24
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse10
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefa
-lsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse16
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse13
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse6
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefal
-sefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse15
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse25
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsef
-alse12
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse22
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse18
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsef
-alsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse20
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse8
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse19
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefa
-lsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse3
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse26
-falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse1
-((({:drawn false, :number 22} {:drawn false,
- :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:drawn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false
-, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012377
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012374
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012379
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012375
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123711
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123717
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123723
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012372
-22131711082234242191416761031
-8511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012370
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123714
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123721
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123724
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123710
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123716
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123713
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012376
-2213171108223424219141676103185112201519315022291813175
-198725232011102441421161261421172441016159191882326202211136520123715
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123725
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123712
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123722
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123718
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123720
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012378
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123719
-22131711082234242191416761031851122015193150222918131751987252320111024414211612
-6142117244101615919188232620221113652012373
-2213171108223424219141676103185112201519315022291813175198725232011102441421161261421172441016159191882326202211136520123726
-221317110822342421914167610318511220151931502229181317519872523201110244142116126142117244101615919188232620221113652012371
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15
-} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:drawn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :nu
-mber 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-true
-clj꞉aoc-01.core꞉> 
-true
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-true
-clj꞉aoc-01.core꞉> 
-true
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-true
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
 false
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
 true
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
+true
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+true
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+true
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+false
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+true
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/data
+clj꞉aoc-01.core꞉> 
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+({:x 0, :y 9}
+ {:x 9, :y 4}
+ {:x 2, :y 2}
+ {:x 7, :y 0}
+ {:x 0, :y 9}
+ {:x 3, :y 4}
+ {:x 5, :y 9}
+ {:x 3, :y 4}
+ {:x 2, :y 1}
+ {:x 7, :y 4}
+ {:x 2, :y 9}
+ {:x 1, :y 4})
+clj꞉aoc-01.core꞉> 
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+({:x 0, :y 9}
+ {:x 9, :y 4}
+ {:x 2, :y 2}
+ {:x 7, :y 0}
+ {:x 0, :y 9}
+ {:x 3, :y 4}
+ {:x 5, :y 9}
+ {:x 3, :y 4}
+ {:x 2, :y 1}
+ {:x 7, :y 4}
+ {:x 2, :y 9}
+ {:x 1, :y 4})
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+{:x 0}
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+{:x 0, :y 0}
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+(start-point end-point)
+clj꞉aoc-01.core꞉> 
+(start-point end-point)
+clj꞉aoc-01.core꞉> 
+(start-point end-point)
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+[{:x 0, :y 0} {:x 9, :y 9}]
+clj꞉aoc-01.core꞉> 
+[{:x 0, :y 0} {:x 9, :y 9}]
+clj꞉aoc-01.core꞉> 
+[{:x 0, :y 0} {:x 9, :y 9}]
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+({:x 0, :y 0}
+ {:x 0, :y 1}
+ {:x 0, :y 2}
+ {:x 0, :y 3}
+ {:x 0, :y 4}
+ {:x 0, :y 5}
+ {:x 0, :y 6}
+ {:x 0, :y 7}
+ {:x 0, :y 8}
+ {:x 1, :y 0}
+ {:x 1, :y 1}
+ {:x 1, :y 2}
+ {:x 1, :y 3}
+ {:x 1, :y 4}
+ {:x 1, :y 5}
+ {:x 1, :y 6}
+ {:x 1, :y 7}
+ {:x 1, :y 8}
+ {:x 2, :y 0}
+ {:x 2, :y 1}
+ {:x 2, :y 2}
+ {:x 2, :y 3}
+ {:x 2, :y 4}
+ {:x 2, :y 5}
+ {:x 2, :y 6}
+ {:x 2, :y 7}
+ {:x 2, :y 8}
+ {:x 3, :y 0}
+ {:x 3, :y 1}
+ {:x 3, :y 2}
+ {:x 3, :y 3}
+ {:x 3, :y 4}
+ {:x 3, :y 5}
+ {:x 3, :y 6}
+ {:x 3, :y 7}
+ {:x 3, :y 8}
+ {:x 4, :y 0}
+ {:x 4, :y 1}
+ {:x 4, :y 2}
+ {:x 4, :y 3}
+ {:x 4, :y 4}
+ {:x 4, :y 5}
+ {:x 4, :y 6}
+ {:x 4, :y 7}
+ {:x 4, :y 8}
+ {:x 5, :y 0}
+ {:x 5, :y 1}
+ {:x 5, :y 2}
+ {:x 5, :y 3}
+ {:x 5, :y 4}
+ ...)
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+({:x 0, :y 0}
+ {:x 0, :y 1}
+ {:x 0, :y 2}
+ {:x 0, :y 3}
+ {:x 0, :y 4}
+ {:x 0, :y 5}
+ {:x 0, :y 6}
+ {:x 0, :y 7}
+ {:x 0, :y 8}
+ {:x 0, :y 9}
+ {:x 1, :y 0}
+ {:x 1, :y 1}
+ {:x 1, :y 2}
+ {:x 1, :y 3}
+ {:x 1, :y 4}
+ {:x 1, :y 5}
+ {:x 1, :y 6}
+ {:x 1, :y 7}
+ {:x 1, :y 8}
+ {:x 1, :y 9}
+ {:x 2, :y 0}
+ {:x 2, :y 1}
+ {:x 2, :y 2}
+ {:x 2, :y 3}
+ {:x 2, :y 4}
+ {:x 2, :y 5}
+ {:x 2, :y 6}
+ {:x 2, :y 7}
+ {:x 2, :y 8}
+ {:x 2, :y 9}
+ {:x 3, :y 0}
+ {:x 3, :y 1}
+ {:x 3, :y 2}
+ {:x 3, :y 3}
+ {:x 3, :y 4}
+ {:x 3, :y 5}
+ {:x 3, :y 6}
+ {:x 3, :y 7}
+ {:x 3, :y 8}
+ {:x 3, :y 9}
+ {:x 4, :y 0}
+ {:x 4, :y 1}
+ {:x 4, :y 2}
+ {:x 4, :y 3}
+ {:x 4, :y 4}
+ {:x 4, :y 5}
+ {:x 4, :y 6}
+ {:x 4, :y 7}
+ {:x 4, :y 8}
+ {:x 4, :y 9}
+ ...)
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+100
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+({:start {:x 0, :y 9}, :end {:x 5, :y 9}}
+ {:start {:x 9, :y 4}, :end {:x 3, :y 4}}
+ {:start {:x 2, :y 2}, :end {:x 2, :y 1}}
+ {:start {:x 7, :y 0}, :end {:x 7, :y 4}}
+ {:start {:x 0, :y 9}, :end {:x 2, :y 9}}
+ {:start {:x 3, :y 4}, :end {:x 1, :y 4}})
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+#function[clojure.core/filter/fn--5874]
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+({:x 0, :y 9} {:x 1, :y 9} {:x 2, :y 9} {:x 3, :y 4} {:x 7, :y 4})
+clj꞉aoc-01.core꞉> 
+; Evaluating file: core.clj
 5
-11
-17
-23
-2
-0
-14
-21
-24
-10
-16
-13
-6
-15
-25
-12
-22
-18
-20
-8
-19
-3
-26
-1
-((({:drawn false, :number 22} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 11} {:drawn false, :number 0}) ({:drawn false, :number 8} {:drawn false, :number 2} {:drawn false, :number 23} {:drawn false, :number 4} {:drawn false, :number 24}) ({:drawn false, :number 21} {:drawn false, :number 9} {:drawn false, :number 14} {:drawn false, :number 16} {:drawn false, :number 7}) ({:drawn false, :number 6} {:drawn false, :number 10} {:drawn false, :number 3} {:drawn false, :number 18} {:drawn false, :number 5}) ({:drawn false, :number 1} {:drawn false, :number 12} {:drawn false, :number 20} {:drawn false, :number 15} {:drawn false, :number 19})) (({:drawn false, :number 3} {:drawn false, :number 15} {:drawn false, :number 0} {:drawn false, :number 2} {:drawn false, :number 22}) ({:drawn false, :number 9} {:drawn false, :number 18} {:drawn false, :number 13} {:drawn false, :number 17} {:drawn false, :number 5}) ({:dr
-awn false, :number 19} {:drawn false, :number 8} {:drawn false, :number 7} {:drawn false, :number 25} {:drawn false, :number 23}) ({:drawn false, :number 20} {:drawn false, :number 11} {:drawn false, :number 10} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 16} {:drawn false, :number 12} {:drawn false, :number 6})) (({:drawn false, :number 14} {:drawn false, :number 21} {:drawn false, :number 17} {:drawn false, :number 24} {:drawn false, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn false, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn false, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn false, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn false, :number 5}) ({:drawn false, :number 2} {:drawn false, :number 0} {:drawn false, :number 1
-2} {:drawn false, :number 3} {:drawn false, :number 7})))
-{:winner nil, :winning-number nil}
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-; Syntax error (ArityException) compiling at (core.clj:73:1).
-; Wrong number of args (0) passed to: aoc-01.core/draw-number
-7
-4
-9
 5
-11
-17
-23
-2
-0
-14
-21
-24
-; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
-
-clj꞉aoc-01.core꞉> 
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+; Evaluating file: core.clj
+; Evaluating file: core.clj
+5774
+clj꞉aoc-01.core꞉> 
+({:x 13, :y 154}
+ {:x 36, :y 154}
+ {:x 36, :y 355}
+ {:x 47, :y 154}
+ {:x 47, :y 180}
+ {:x 47, :y 355}
+ {:x 48, :y 355}
+ {:x 52, :y 660}
+ {:x 52, :y 749}
+ {:x 52, :y 855}
+ {:x 52, :y 887}
+ {:x 52, :y 893}
+ {:x 56, :y 660}
+ {:x 56, :y 749}
+ {:x 58, :y 154}
+ {:x 58, :y 278}
+ {:x 58, :y 298}
+ {:x 58, :y 355}
+ {:x 58, :y 456}
+ {:x 58, :y 478}
+ {:x 58, :y 660}
+ {:x 58, :y 749}
+ {:x 66, :y 154}
+ {:x 66, :y 278}
+ {:x 66, :y 298}
+ {:x 66, :y 355}
+ {:x 66, :y 456}
+ {:x 66, :y 478}
+ {:x 66, :y 550}
+ {:x 68, :y 278}
+ {:x 68, :y 298}
+ {:x 68, :y 355}
+ {:x 68, :y 456}
+ {:x 74, :y 456}
+ {:x 74, :y 478}
+ {:x 74, :y 484}
+ {:x 74, :y 500}
+ {:x 74, :y 550}
+ {:x 74, :y 660}
+ {:x 88, :y 154}
+ {:x 88, :y 255}
+ {:x 88, :y 270}
+ {:x 88, :y 278}
+ {:x 88, :y 298}
+ {:x 88, :y 355}
+ {:x 88, :y 456}
+ {:x 88, :y 478}
+ {:x 88, :y 484}
+ {:x 88, :y 500}
+ {:x 88, :y 550}
+ ...)
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+5774
+clj꞉aoc-01.core꞉> 
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+{:start {:x 11, :y 13}, :end {:x 990, :y 984}}
+{:start {:x 11, :y 13}, :end {:x 990, :y 984}}
+clj꞉aoc-01.core꞉> 
+clj꞉aoc-01.core꞉> 
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+({:start {:x 452, :y 244}, :end {:x 452, :y 303}}
+ {:start {:x 958, :y 109}, :end {:x 958, :y 639}}
+ {:start {:x 809, :y 31}, :end {:x 778, :y 31}}
+ {:start {:x 927, :y 139}, :end {:x 917, :y 139}}
+ {:start {:x 56, :y 298}, :end {:x 273, :y 298}}
+ {:start {:x 959, :y 53}, :end {:x 959, :y 739}}
+ {:start {:x 80, :y 255}, :end {:x 434, :y 255}}
+ {:start {:x 750, :y 500}, :end {:x 73, :y 500}}
+ {:start {:x 800, :y 363}, :end {:x 800, :y 25}}
+ {:start {:x 688, :y 745}, :end {:x 688, :y 696}}
+ {:start {:x 364, :y 41}, :end {:x 364, :y 351}}
+ {:start {:x 693, :y 642}, :end {:x 693, :y 67}}
+ {:start {:x 564, :y 143}, :end {:x 755, :y 143}}
+ {:start {:x 622, :y 682}, :end {:x 622, :y 869}}
+ {:start {:x 311, :y 515}, :end {:x 311, :y 120}}
+ {:start {:x 210, :y 255}, :end {:x 210, :y 363}}
+ {:start {:x 66, :y 550}, :end {:x 540, :y 550}}
+ {:start {:x 321, :y 712}, :end {:x 680, :y 712}}
+ {:start {:x 357, :y 893}, :end {:x 823, :y 893}}
+ {:start {:x 389, :y 724}, :end {:x 389, :y 329}}
+ {:start {:x 859, :y 75}, :end {:x 859, :y 591}}
+ {:start {:x 195, :y 618}, :end {:x 161, :y 618}}
+ {:start {:x 602, :y 553}, :end {:x 547, :y 553}}
+ {:start {:x 98, :y 930}, :end {:x 98, :y 683}}
+ {:start {:x 741, :y 522}, :end {:x 895, :y 522}}
+ {:start {:x 143, :y 636}, :end {:x 683, :y 636}}
+ {:start {:x 56, :y 751}, :end {:x 56, :y 555}}
+ {:start {:x 696, :y 117}, :end {:x 784, :y 117}}
+ {:start {:x 625, :y 827}, :end {:x 277, :y 827}}
+ {:start {:x 908, :y 633}, :end {:x 213, :y 633}}
+ {:start {:x 482, :y 290}, :end {:x 256, :y 290}}
+ {:start {:x 717, :y 566}, :end {:x 717, :y 923}}
+ {:start {:x 258, :y 34}, :end {:x 728, :y 34}}
+ {:start {:x 862, :y 54}, :end {:x 862, :y 869}}
+ {:start {:x 342, :y 291}, :end {:x 147, :y 291}}
+ {:start {:x 48, :y 308}, :end {:x 48, :y 600}}
+ {:start {:x 44, :y 749}, :end {:x 823, :y 749}}
+ {:start {:x 671, :y 533}, :end {:x 944, :y 533}}
+ {:start {:x 848, :y 804}, :end {:x 315, :y 804}}
+ {:start {:x 960, :y 310}, :end {:x 980, :y 310}}
+ {:start {:x 730, :y 426}, :end {:x 730, :y 330}}
+ {:start {:x 217, :y 128}, :end {:x 217, :y 763}}
+ {:start {:x 207, :y 329}, :end {:x 201, :y 329}}
+ {:start {:x 338, :y 724}, :end {:x 338, :y 783}}
+ {:start {:x 434, :y 89}, :end {:x 501, :y 89}}
+ {:start {:x 812, :y 298}, :end {:x 812, :y 480}}
+ {:start {:x 299, :y 190}, :end {:x 752, :y 190}}
+ {:start {:x 441, :y 301}, :end {:x 441, :y 872}}
+ {:start {:x 643, :y 913}, :end {:x 643, :y 21}}
+ {:start {:x 518, :y 204}, :end {:x 518, :y 442}}
+ ...)
+clj꞉aoc-01.core꞉> 
+{:start {:x 11, :y 13}, :end {:x 990, :y 984}}
+clj꞉aoc-01.core꞉> 
+{:start {:x 11, :y 13}, :end {:x 990, :y 984}}
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+#'aoc-01.core/corners
+clj꞉aoc-01.core꞉> 
+{:start {:x 11, :y 13}, :end {:x 990, :y 984}}
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+#'aoc-01.core/cartesian-plane
+clj꞉aoc-01.core꞉> 
+({:x 11, :y 13}
+ {:x 11, :y 14}
+ {:x 11, :y 15}
+ {:x 11, :y 16}
+ {:x 11, :y 17}
+ {:x 11, :y 18}
+ {:x 11, :y 19}
+ {:x 11, :y 20}
+ {:x 11, :y 21}
+ {:x 11, :y 22}
+ {:x 11, :y 23}
+ {:x 11, :y 24}
+ {:x 11, :y 25}
+ {:x 11, :y 26}
+ {:x 11, :y 27}
+ {:x 11, :y 28}
+ {:x 11, :y 29}
+ {:x 11, :y 30}
+ {:x 11, :y 31}
+ {:x 11, :y 32}
+ {:x 11, :y 33}
+ {:x 11, :y 34}
+ {:x 11, :y 35}
+ {:x 11, :y 36}
+ {:x 11, :y 37}
+ {:x 11, :y 38}
+ {:x 11, :y 39}
+ {:x 11, :y 40}
+ {:x 11, :y 41}
+ {:x 11, :y 42}
+ {:x 11, :y 43}
+ {:x 11, :y 44}
+ {:x 11, :y 45}
+ {:x 11, :y 46}
+ {:x 11, :y 47}
+ {:x 11, :y 48}
+ {:x 11, :y 49}
+ {:x 11, :y 50}
+ {:x 11, :y 51}
+ {:x 11, :y 52}
+ {:x 11, :y 53}
+ {:x 11, :y 54}
+ {:x 11, :y 55}
+ {:x 11, :y 56}
+ {:x 11, :y 57}
+ {:x 11, :y 58}
+ {:x 11, :y 59}
+ {:x 11, :y 60}
+ {:x 11, :y 61}
+ {:x 11, :y 62}
+ ...)
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+#'aoc-01.core/overlapping-points
+clj꞉aoc-01.core꞉> 
+({:x 13, :y 154}
+ {:x 36, :y 154}
+ {:x 36, :y 355}
+ {:x 47, :y 154}
+ {:x 47, :y 180}
+ {:x 47, :y 355}
+ {:x 48, :y 355}
+ {:x 52, :y 660}
+ {:x 52, :y 749}
+ {:x 52, :y 855}
+ {:x 52, :y 887}
+ {:x 52, :y 893}
+ {:x 56, :y 660}
+ {:x 56, :y 749}
+ {:x 58, :y 154}
+ {:x 58, :y 278}
+ {:x 58, :y 298}
+ {:x 58, :y 355}
+ {:x 58, :y 456}
+ {:x 58, :y 478}
+ {:x 58, :y 660}
+ {:x 58, :y 749}
+ {:x 66, :y 154}
+ {:x 66, :y 278}
+ {:x 66, :y 298}
+ {:x 66, :y 355}
+ {:x 66, :y 456}
+ {:x 66, :y 478}
+ {:x 66, :y 550}
+ {:x 68, :y 278}
+ {:x 68, :y 298}
+ {:x 68, :y 355}
+ {:x 68, :y 456}
+ {:x 74, :y 456}
+ {:x 74, :y 478}
+ {:x 74, :y 484}
+ {:x 74, :y 500}
+ {:x 74, :y 550}
+ {:x 74, :y 660}
+ {:x 88, :y 154}
+ {:x 88, :y 255}
+ {:x 88, :y 270}
+ {:x 88, :y 278}
+ {:x 88, :y 298}
+ {:x 88, :y 355}
+ {:x 88, :y 456}
+ {:x 88, :y 478}
+ {:x 88, :y 484}
+ {:x 88, :y 500}
+ {:x 88, :y 550}
+ ...)
 clj꞉aoc-01.core꞉> 
 ; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
+5774
 clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn false, :number 10} {:drawn false, :number 18} {:drawn false, :number 22} {:drawn true, :number 2}) ({:drawn true, :number 21} {:drawn false, :number 16} {:drawn false, :number 8} {:drawn true, :number 11} {:drawn true, :number 0}) ({:drawn true, :number 17} {:drawn false, :number 15} {:drawn true, :number 23} {:drawn false, :number 13} {:drawn false, :number 12}) ({:drawn true, :number 24} {:drawn true, :number 9} {:drawn false, :number 26} {:drawn false, :number 6} {:drawn false, :number 3}) ({:drawn true, :number 4} {:drawn false, :number 19} {:drawn false, :number 20} {:drawn true, :number 5} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-([({:drawn false, :number 22}
-   {:drawn false, :number 8}
-   {:drawn false, :number 21}
-   {:drawn false, :number 6}
-   {:drawn false, :number 1})
-  ({:drawn false, :number 13}
-   {:drawn false, :number 2}
-   {:drawn false, :number 9}
-   {:drawn false, :number 10}
-   {:drawn false, :number 12})
-  ({:drawn false, :number 17}
-   {:drawn false, :number 23}
-   {:drawn false, :number 14}
-   {:drawn false, :number 3}
-   {:drawn false, :number 20})
-  ({:drawn false, :number 11}
-   {:drawn false, :number 4}
-   {:drawn false, :number 16}
-   {:drawn false, :number 18}
-   {:drawn false, :number 15})
-  ({:drawn false, :number 0}
-   {:drawn false, :number 24}
-   {:drawn false, :number 7}
-   {:drawn false, :number 5}
-   {:drawn false, :number 19})]
- [({:drawn false, :number 3}
-   {:drawn false, :number 9}
-   {:drawn false, :number 19}
-   {:drawn false, :number 20}
-   {:drawn false, :number 14})
-  ({:drawn false, :number 15}
-   {:drawn false, :number 18}
-   {:drawn false, :number 8}
-   {:drawn false, :number 11}
-   {:drawn false, :number 21})
-  ({:drawn false, :number 0}
-   {:drawn false, :number 13}
-   {:drawn false, :number 7}
-   {:drawn false, :number 10}
-   {:drawn false, :number 16})
-  ({:drawn false, :number 2}
-   {:drawn false, :number 17}
-   {:drawn false, :number 25}
-   {:drawn false, :number 24}
-   {:drawn false, :number 12})
-  ({:drawn false, :number 22}
-   {:drawn false, :number 5}
-   {:drawn false, :number 23}
-   {:drawn false, :number 4}
-   {:drawn false, :number 6})]
- [({:drawn false, :number 14}
-   {:drawn false, :number 10}
-   {:drawn false, :number 18}
-   {:drawn false, :number 22}
-   {:drawn false, :number 2})
-  ({:drawn false, :number 21}
-   {:drawn false, :number 16}
-   {:drawn false, :number 8}
-   {:drawn false, :number 11}
-   {:drawn false, :number 0})
-  ({:drawn false, :number 17}
-   {:drawn false, :number 15}
-   {:drawn false, :number 23}
-   {:drawn false, :number 13}
-   {:drawn false, :number 12})
-  ({:drawn false, :number 24}
-   {:drawn false, :number 9}
-   {:drawn false, :number 26}
-   {:drawn false, :number 6}
-   {:drawn false, :number 3})
-  ({:drawn false, :number 4}
-   {:drawn false, :number 19}
-   {:drawn false, :number 20}
-   {:drawn false, :number 5}
-   {:drawn false, :number 7})])
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn false, :number 10} {:drawn false, :number 18} {:drawn false, :number 22} {:drawn true, :number 2}) ({:drawn true, :number 21} {:drawn false, :number 16} {:drawn false, :number 8} {:drawn true, :number 11} {:drawn true, :number 0}) ({:drawn true, :number 17} {:drawn false, :number 15} {:drawn true, :number 23} {:drawn false, :number 13} {:drawn false, :number 12}) ({:drawn true, :number 24} {:drawn true, :number 9} {:drawn false, :number 26} {:drawn false, :number 6} {:drawn false, :number 3}) ({:drawn true, :number 4} {:drawn false, :number 19} {:drawn false, :number 20} {:drawn true, :number 5} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7
-4
-9
-5
-11
-17
-23
-2
-0
-14
-21
-24
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-{:winner (({:drawn true, :number 14} {:drawn true, :number 21} {:drawn true, :number 17} {:drawn true, :number 24} {:drawn true, :number 4}) ({:drawn false, :number 10} {:drawn false, :number 16} {:drawn false, :number 15} {:drawn true, :number 9} {:drawn false, :number 19}) ({:drawn false, :number 18} {:drawn false, :number 8} {:drawn true, :number 23} {:drawn false, :number 26} {:drawn false, :number 20}) ({:drawn false, :number 22} {:drawn true, :number 11} {:drawn false, :number 13} {:drawn false, :number 6} {:drawn true, :number 5}) ({:drawn true, :number 2} {:drawn true, :number 0} {:drawn false, :number 12} {:drawn false, :number 3} {:drawn true, :number 7})), :winning-number 24}
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-#'aoc-01.core/winner
-clj꞉aoc-01.core꞉> 
-({:drawn false, :number 10}
- {:drawn false, :number 16}
- {:drawn false, :number 15}
- {:drawn false, :number 19}
- {:drawn false, :number 18}
- {:drawn false, :number 8}
- {:drawn false, :number 26}
- {:drawn false, :number 20}
- {:drawn false, :number 22}
- {:drawn false, :number 13}
- {:drawn false, :number 6}
- {:drawn false, :number 12}
- {:drawn false, :number 3})
-clj꞉aoc-01.core꞉> 
-(10 16 15 19 18 8 26 20 22 13 6 12 3)
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-188
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-4512
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-7 
-4 
-9 
-5 
-11 
-17 
-23 
-2 
-0 
-14 
-21 
-24 
-4512
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-63 
-23 
-2 
-65 
-55 
-94 
-38 
-20 
-22 
-39 
-5 
-98 
-9 
-60 
-80 
-45 
-99 
-68 
-12 
-3 
-6 
-34 
-64 
-63424
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-63 
-23 
-2 
-65 
-55 
-94 
-38 
-20 
-22 
-39 
-5 
-98 
-9 
-60 
-80 
-45 
-99 
-68 
-12 
-3 
-6 
-34 
-64 
-63424
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-63 
-23 
-2 
-65 
-55 
-94 
-38 
-20 
-22 
-39 
-5 
-98 
-9 
-60 
-80 
-45 
-99 
-68 
-12 
-3 
-6 
-34 
-64 
-10 
-70 
-69 
-95 
-96 
-83 
-81 
-32 
-30 
-42 
-73 
-52 
-48 
-92 
-28 
-37 
-35 
-54 
-7 
-50 
-21 
-74 
-36 
-91 
-97 
-13 
-71 
-86 
-53 
-46 
-58 
-76 
-77 
-14 
-88 
-78 
-1 
-33 
-51 
-89 
-26 
-27 
-31 
-82 
-44 
-61 
-62 
-75 
-66 
-11 
-93 
-49 
-43 
-85 
-0 
-87 
-40 
-24 
-29 
-15 
-59 
-23541
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-63 
-23 
-2 
-65 
-55 
-94 
-38 
-20 
-22 
-39 
-5 
-98 
-9 
-60 
-80 
-45 
-99 
-68 
-12 
-3 
-6 
-34 
-64 
-10 
-70 
-69 
-95 
-96 
-83 
-81 
-32 
-30 
-42 
-73 
-52 
-48 
-92 
-28 
-37 
-35 
-54 
-7 
-50 
-21 
-74 
-36 
-91 
-97 
-13 
-71 
-86 
-53 
-46 
-58 
-76 
-77 
-14 
-88 
-78 
-1 
-33 
-51 
-89 
-26 
-27 
-31 
-82 
-44 
-61 
-62 
-75 
-66 
-11 
-93 
-49 
-43 
-85 
-0 
-87 
-40 
-24 
-29 
-15 
-59 
-23541
-clj꞉aoc-01.core꞉> 
-; Evaluating file: core.clj
-63 
-23 
-2 
-65 
-55 
-94 
-38 
-20 
-22 
-39 
-5 
-98 
-9 
-60 
-80 
-45 
-99 
-68 
-12 
-3 
-6 
-34 
-64 
-10 
-70 
-69 
-95 
-96 
-83 
-81 
-32 
-30 
-42 
-73 
-52 
-48 
-92 
-28 
-37 
-35 
-54 
-7 
-50 
-21 
-74 
-36 
-91 
-97 
-13 
-71 
-86 
-53 
-46 
-58 
-76 
-77 
-14 
-88 
-78 
-1 
-33 
-51 
-89 
-26 
-27 
-31 
-82 
-44 
-61 
-62 
-75 
-66 
-11 
-93 
-49 
-43 
-85 
-0 
-87 
-40 
-24 
-29 
-15 
-59 
-23541
+5774
 clj꞉aoc-01.core꞉> 
