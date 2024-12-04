@@ -1,4 +1,6 @@
 */.calva/
-*/.clj-condo/
+**/.clj-condo/
+**/.clj-kondo/
+**/.lsp/
 **/.zig-cache/
 **/zig-out/

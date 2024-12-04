@@ -1,6 +1,6 @@
 (ns rest-of-advent-24.day-03
   (:require
-   [clojure.string :refer [split starts-with?]]))
+   [clojure.string :refer [starts-with?]]))
 
 (def input
   (->> "resources/day-03-input.txt"
