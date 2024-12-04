@@ -2,6 +2,48 @@
   (:require
    [clojure.string :refer [starts-with?]]))
 
+(defmacro ^:macro blk
+  {:clj-kondo/ignore true}
+  ([] nil)
+  ([& block]
+   (assert (seq? block))
+   (assert (> (count block) 0))
+   (let [head (first block)
+         tail (rest block)]
+
+     (cond (and (seq? head) (= 'const (first head))) ;; const
+           (do (assert (= 3 (count head)))
+               (let [[_ lhs rhs] head]
+                 `(let [~lhs ~rhs]
+                   (blk ~@tail))))
+
+           :else ;; return first non-nil value
+           `(let [result# ~head]
+             (if (nil? result#)
+               (blk ~@tail)
+               result#))))))
+
+(macroexpand
+  (macroexpand
+    '(blk (if (nil? nil) "yeah")
+          (const a "hello")
+          (if false "return this? no")
+          "hello")))
+
+(macroexpand
+  '(blk (const a "hello")
+        (if false "return this? no")
+        "hello"))
+
+(blk (const a "hello")
+     (if false "return this? no")
+     "hello")
+
+(blk (if (nil? "") "yeah")
+     (const a "blah")
+     (if false "return this? no")
+     a)
+
 (def input
   (->> "resources/day-03-input.txt"
        (slurp)))
