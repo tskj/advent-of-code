@@ -1,0 +1,1 @@
+["^ ","~:members",["^ ","name",["~#set",[["^ ","~:flags",["^2",["~:field","~:final"]]]]],"restrictedCallType",["^2",[["^ ","^3",["^2",["^4","^5"]]]]],"Restriction",["^2",[["^ ","^3",["^2",["~:method"]]]]],"RestrictedNameCall",["^2",[["^ ","^3",["^2",["^8"]]]]],"checkConformance",["^2",[["^ ","^3",["^2",["^8","~:protected"]]]]]]]
