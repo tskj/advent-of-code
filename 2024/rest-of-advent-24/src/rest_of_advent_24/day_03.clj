@@ -2,33 +2,47 @@
   (:require
    [clojure.string :refer [starts-with?]]))
 
-(defmacro ^:macro blk
+(defmacro blk
   {:clj-kondo/ignore true}
   ([] nil)
   ([& block]
    (assert (seq? block))
    (assert (> (count block) 0))
-   (let [head (first block)
-         tail (rest block)]
+   (let [line-of-code (first block)
+         rest-of-codeblock (rest block)]
 
-     (cond (and (seq? head) (= 'const (first head))) ;; const
-           (do (assert (= 3 (count head)))
-               (let [[_ lhs rhs] head]
+     (cond (and (seq? line-of-code) (= 'const (first line-of-code))) ;; const
+           (do (assert (= 3 (count line-of-code)))
+               (let [[_ lhs rhs] line-of-code]
                  `(let [~lhs ~rhs]
-                   (blk ~@tail))))
+                   (blk ~@rest-of-codeblock))))
+
+           (and (seq? line-of-code) (= 'const-try (first line-of-code)))
+           (do (assert (= 3 (count line-of-code)))
+               (let [[_ lhs rhs] line-of-code]
+                 `(let [rhs# ~rhs]
+                    (if (nil? rhs#)
+                      nil
+                      (let [~lhs rhs#]
+                          (blk ~@rest-of-codeblock))))))
 
            :else ;; return first non-nil value
-           `(let [result# ~head]
+           `(let [result# ~line-of-code]
              (if (nil? result#)
-               (blk ~@tail)
-               result#))))))
+               (blk ~@rest-of-codeblock)
+               (if (and (map? result#) (= (set (keys result#)) #{:return}))
+                (:return result#)
+                result#)))))))
 
-(macroexpand
-  (macroexpand
-    '(blk (if (nil? nil) "yeah")
-          (const a "hello")
-          (if false "return this? no")
-          "hello")))
+(let [result__6860__auto__ "test"]
+  (println result__6860__auto__)
+
+  (blk (if (= (+ 1 1) 4) "yeah")
+     (const a "hello")
+     (println (str "hello___" result__6860__auto__))
+     (if true (str "her " a))
+     (if false "return this? no")
+     a))
 
 (macroexpand
   '(blk (const a "hello")
@@ -40,7 +54,13 @@
      "hello")
 
 (blk (if (nil? "") "yeah")
-     (const a "blah")
+     (if true {:return "test"})
+     (const a nil)
+     (if true "return this? no")
+     a)
+
+(blk (if (nil? "") "yeah")
+     (const-try a "hei")
      (if false "return this? no")
      a)
 
@@ -48,15 +68,41 @@
   (->> "resources/day-03-input.txt"
        (slurp)))
 
+(defn is-digit? [d]
+  (Character/isDigit d))
+
+(macroexpand
+  '(blk
+     (const-try [next-digits s'] (parse-n-digit-int (subs s 1)))
+     (if (empty? s) {:return nil})
+     (const first-character (first s))
+     (if (not (is-digit first-character)) {:return nil})
+
+     (println "parse-n called with " s " and first-character=" first-character)
+
+     (const digit first-character)
+     (const-try [next-digits s'] (parse-n-digit-int (subs s 1)))
+     (println "next-digits " next-digits " and s'=" s')
+
+     [(str digit (or next-digits "")) s']))
+
 (defn parse-n-digit-int [s]
-  (if (Character/isDigit (first s))
-    (let [digit (first s)
-          [next-digits s'] (parse-n-digit-int (subs s 1))]
-      [(str digit (or next-digits "")) s'])
-    [nil s]))
+  (blk
+   (if (empty? s) {:return nil})
+
+   (const first-character (first s))
+   (const r (subs s 1))
+
+   (if (not (is-digit? first-character)) {:return nil})
+
+   (const digit first-character)
+   (const [next-digits s'] (or (parse-n-digit-int (subs s 1))
+                               [nil r]))
+
+   {:return [(str digit (or next-digits "")) s']}))
 
 (defn str-to-int [s]
-  (assert (every? #(Character/isDigit %) s) "this function only applies to int digits")
+  (assert (every? is-digit? s) "this function only applies to int digits")
   (reduce (fn [acc x]
             (let [digit (- (int x) 48)]
               (+ digit (* 10 acc))))
