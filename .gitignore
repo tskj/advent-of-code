@@ -1,2 +1,4 @@
 */.calva/
 */.clj-condo/
+**/.zig-cache/
+**/zig-out/
