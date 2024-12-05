@@ -22,6 +22,10 @@
                     (let [~lhs rhs#]
                         (blk ~@rest-of-codeblock))))))
 
+         (and (seq? line-of-code) (= 'if-let (first line-of-code)))
+         (do (assert (= 3 (count line-of-code)))
+             (concat line-of-code [`(blk ~@rest-of-codeblock)]))
+
          :else ;; return first non-nil value
          `(let [result# ~line-of-code]
            (if (nil? result#)
@@ -97,16 +101,20 @@
       acc
 
       enabled?
-      (if-let [[result s] (parse-mul-thing s)]
-          (recur (conj acc result) true s)
+      (blk
+        (if-let [[result s] (parse-mul-thing s)]
+          (recur (conj acc result) true s))
 
-          (if-let [[don't s] (parse-don't s)]
-            (recur acc false s)
-            (recur acc true (subs s 1))))
+        (if-let [[don't s] (parse-don't s)]
+          (recur acc false s))
+
+        (recur acc true (subs s 1)))
 
       :else
-      (if-let [[do s] (parse-do s)]
-        (recur acc true s)
+      (blk
+        (if-let [[do s] (parse-do s)]
+          (recur acc true s))
+
         (recur acc false (subs s 1)))))
 
   (reduce +))
