@@ -113,13 +113,11 @@
 
 (defn parse-mul-thing [initial-s]
   (blk
-    (if (< (count initial-s) 4) {:return nil}) ;; TODO: remove????
-
-    (const-try [_mul s]     (parse-literal mul initial-s))
-    (const-try [the-int s]  (parse-n-digit-int s))
-    (const-try [_comma s] (parse-comma s))
+    (const-try [_mul         s] (parse-literal mul initial-s))
+    (const-try [the-int      s] (parse-n-digit-int s))
+    (const-try [_comma       s] (parse-comma s))
     (const-try [the-next-int s] (parse-n-digit-int s))
-    (const-try [_end-paren s]   (parse-ending-paren s))
+    (const-try [_end-paren   s] (parse-ending-paren s))
 
     [(* (str-to-int the-int) (str-to-int the-next-int)) s]))
 
@@ -129,20 +127,23 @@
          enabled true
          s input]
 
-    (if (empty? s)
-      acc
-      (if enabled
-        (let [[result s] (or (parse-mul-thing s)
-                             [nil s])
-              [d s] (or (parse-don't s)
-                        [nil s])]
-          (if (nil? result)
-            (recur acc (nil? d) (subs s 1))
-            (recur (conj acc result) (nil? d) s)))
-        (let [[d s] (or (parse-do s)
-                        [nil s])
-              next-s (if (nil? d) (subs s 1) s)]
-          (recur acc (not (nil? d)) next-s)))))
+    (cond (empty? s)
+          acc
+
+          enabled
+          (let [[result s] (or (parse-mul-thing s)
+                               [nil s])
+                [d s] (or (parse-don't s)
+                          [nil s])]
+            (if (nil? result)
+              (recur acc (nil? d) (subs s 1))
+              (recur (conj acc result) (nil? d) s)))
+
+          :else
+          (let [[d s] (or (parse-do s)
+                          [nil s])
+                next-s (if (nil? d) (subs s 1) s)]
+            (recur acc (not (nil? d)) next-s))))
 
   (reduce +))
 
