@@ -82,6 +82,34 @@
                                                              (includes b update)))))]
     (every? #(rule-is-not-violated? % update) applicable-rules)))
 
+(defn swap [coll i-a i-b]
+  (let [a (get coll i-a)
+        b (get coll i-b)]
+    (-> coll
+        (assoc i-a b)
+        (assoc i-b a))))
+
+(defn find-idx [n coll]
+  (let [indices (->> coll
+                 (map-indexed (fn [idx x] (when (= x n) idx)))
+                 (filter some?))]
+    (assert (= 1 (count indices)))
+    (first indices)))
+
+(defn fix-update [update]
+  (let [applicable-rules (->> rules (filter (fn [[a b]] (and (includes a update)
+                                                             (includes b update)))))
+        result (->> [update applicable-rules]
+                    (apply reduce (fn [u r]
+                                   (if (rule-is-not-violated? r u)
+                                     u
+                                     (swap (vec u)
+                                           (find-idx (first r) u)
+                                           (find-idx (second r) u))))))]
+    (if (not (is-acceptable? result))
+      (fix-update result)
+      result)))
+
 (defn middle-number [update]
   (if (<= (count update) 1)
     (do (assert (= (count update) 1))
@@ -93,6 +121,7 @@
                         (reverse)))))
 
 (->> updates
-     (filter is-acceptable?)
+     (filter (comp not is-acceptable?))
+     (map fix-update)
      (map middle-number)
      (reduce +))
