@@ -52,10 +52,10 @@
    (if (not (is-digit? first-character)) {:return nil})
 
    (const digit first-character)
-   (const [next-digits s] (or (parse-n-digit-int s)
-                              [nil s]))
+   (const [next?-digits s] (or (parse-n-digit-int s)
+                               ["" s]))
 
-   [(str digit (or next-digits "")) s]))
+   [(str digit next?-digits) s]))
 
 (defn parse-literal [p s]
   (when (starts-with? s p)
@@ -97,18 +97,17 @@
       acc
 
       enabled?
-      (let [[result s] (or (parse-mul-thing s)
-                           [nil s])
-            [don't  s] (or (parse-don't s)
-                           [nil (if (nil? result) (subs s 1) s)])]
-        (if (nil? result)
-          (recur acc                (nil? don't) s)
-          (recur (conj acc result)  (nil? don't) s)))
+      (if-let [[result s] (parse-mul-thing s)]
+          (recur (conj acc result) true s)
+
+          (if-let [[don't s] (parse-don't s)]
+            (recur acc false s)
+            (recur acc true (subs s 1))))
 
       :else
-      (let [[do s] (or (parse-do s)
-                       [nil (subs s 1)])]
-        (recur acc (not (nil? do)) s))))
+      (if-let [[do s] (parse-do s)]
+        (recur acc true s)
+        (recur acc false (subs s 1)))))
 
   (reduce +))
 
