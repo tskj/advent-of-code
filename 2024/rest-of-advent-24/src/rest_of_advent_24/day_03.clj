@@ -35,6 +35,13 @@
 (defn is-digit? [d]
   (Character/isDigit d))
 
+(defn str-to-int [s]
+  (assert (every? is-digit? s) "this function only applies to int digits")
+  (->> [0 s]
+       (apply reduce (fn [acc x]
+                       (let [digit (- (int x) 48)]
+                         (+ digit (* 10 acc)))))))
+
 (defn parse-n-digit-int [s]
   (blk
    (if (empty? s) {:return nil})
@@ -49,13 +56,6 @@
                               [nil s]))
 
    [(str digit (or next-digits "")) s]))
-
-(defn str-to-int [s]
-  (assert (every? is-digit? s) "this function only applies to int digits")
-  (->> [0 s]
-       (apply reduce (fn [acc x]
-                       (let [digit (- (int x) 48)]
-                         (+ digit (* 10 acc)))))))
 
 (defn parse-literal [p s]
   (when (starts-with? s p)
@@ -76,9 +76,9 @@
 (defn parse-mul [s]
   (parse-literal "mul(" s))
 
-(defn parse-mul-thing [initial-s]
+(defn parse-mul-thing [s]
   (blk
-    (const-try [_mul        s] (parse-mul initial-s))
+    (const-try [_mul        s] (parse-mul s))
     (const-try [first-int   s] (parse-n-digit-int s))
     (const-try [_comma      s] (parse-comma s))
     (const-try [second-int  s] (parse-n-digit-int s))
