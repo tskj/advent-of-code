@@ -99,17 +99,16 @@
       enabled?
       (let [[result s] (or (parse-mul-thing s)
                            [nil s])
-            [d      s] (or (parse-don't s)
-                           [nil s])]
+            [don't  s] (or (parse-don't s)
+                           [nil (if (nil? result) (subs s 1) s)])]
         (if (nil? result)
-          (recur acc (nil? d) (subs s 1))
-          (recur (conj acc result) (nil? d) s)))
+          (recur acc                (nil? don't) s)
+          (recur (conj acc result)  (nil? don't) s)))
 
       :else
-      (let [[d s] (or (parse-do s)
-                      [nil s])
-            next-s (if (nil? d) (subs s 1) s)]
-        (recur acc (not (nil? d)) next-s))))
+      (let [[do s] (or (parse-do s)
+                       [nil (subs s 1)])]
+        (recur acc (not (nil? do)) s))))
 
   (reduce +))
 
