@@ -2,16 +2,26 @@
   (:require
    [clojure.string :refer [starts-with?]]))
 
+(defn is-explicit-return? [r]
+  (and (map? r)
+       (= (set (keys r))
+          #{:return})))
+
+(defn unwrap-explicit-return [r]
+  (if (is-explicit-return? r)
+    (:return r)
+    r))
+
 (defmacro blk
   {:clj-kondo/ignore true}
   ([] nil)
-  ([last-return] last-return)
+  ([last-return] (unwrap-explicit-return last-return))
   ([line-of-code & rest-of-codeblock]
-   (cond (and (seq? line-of-code) (= 'const (first line-of-code))) ;; const
+   (cond (and (seq? line-of-code) (= 'const (first line-of-code)))
          (do (assert (= 3 (count line-of-code)))
              (let [[_ lhs rhs] line-of-code]
                `(let [~lhs ~rhs]
-                 (blk ~@rest-of-codeblock))))
+                  (blk ~@rest-of-codeblock))))
 
          (and (seq? line-of-code) (= 'const-try (first line-of-code)))
          (do (assert (= 3 (count line-of-code)))
@@ -20,19 +30,23 @@
                   (if (nil? rhs#)
                     nil
                     (let [~lhs rhs#]
-                        (blk ~@rest-of-codeblock))))))
+                      (blk ~@rest-of-codeblock))))))
+
+         (and (seq? line-of-code) (= 'if (first line-of-code)))
+         (do (assert (= 3 (count line-of-code)))
+             (let [[if' cond r] line-of-code]
+               (list if' cond (unwrap-explicit-return r) `(blk ~@rest-of-codeblock))))
 
          (and (seq? line-of-code) (= 'if-let (first line-of-code)))
          (do (assert (= 3 (count line-of-code)))
-             (concat line-of-code [`(blk ~@rest-of-codeblock)]))
+             (let [[if-let' cond r] line-of-code]
+               (list if-let' cond (unwrap-explicit-return r)`(blk ~@rest-of-codeblock))))
 
-         :else ;; return first non-nil value
-         `(let [result# ~line-of-code]
-           (if (nil? result#)
-             (blk ~@rest-of-codeblock)
-             (if (and (map? result#) (= (set (keys result#)) #{:return}))
-              (:return result#)
-              result#))))))
+         :else
+         (if (is-explicit-return? line-of-code)
+           (unwrap-explicit-return line-of-code) ;; <- returns explicit return, useful for debugging
+           `(do line-of-code                     ;; <- sideeffect
+                (blk ~@rest-of-codeblock))))))
 
 (def input (slurp "resources/day-03-input.txt"))
 
@@ -118,4 +132,3 @@
         (recur acc false (subs s 1)))))
 
   (reduce +))
-
