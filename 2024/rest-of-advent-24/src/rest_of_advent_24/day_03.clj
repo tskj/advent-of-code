@@ -3,14 +3,15 @@
    [clojure.string :refer [starts-with?]]))
 
 (defn is-explicit-return? [r]
-  (and (map? r)
-       (= (set (keys r))
-          #{:return})))
+  (and (seq? r)
+       (= (first r) 'return)))
+
 
 (defn unwrap-explicit-return [r]
   (if (is-explicit-return? r)
-    (:return r)
-    r))
+      (do (assert (= (count r) 2) "return needs exactly one return value")
+          (second r))
+      r))
 
 (defmacro blk
   {:clj-kondo/ignore true}
@@ -62,12 +63,12 @@
 
 (defn parse-n-digit-int [s]
   (blk
-   (if (empty? s) {:return nil})
+   (if (empty? s) (return nil))
 
    (const first-character (first s))
    (const s (subs s 1))
 
-   (if (not (is-digit? first-character)) {:return nil})
+   (if (not (is-digit? first-character)) (return nil))
 
    (const digit first-character)
    (const [next?-digits s] (or (parse-n-digit-int s)
