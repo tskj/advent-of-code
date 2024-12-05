@@ -46,7 +46,7 @@
          :else
          (if (is-explicit-return? line-of-code)
            (unwrap-explicit-return line-of-code) ;; <- returns explicit return, useful for debugging
-           `(do line-of-code                     ;; <- sideeffect
+           `(do ~line-of-code                     ;; <- sideeffect
                 (blk ~@rest-of-codeblock))))))
 
 
@@ -88,10 +88,52 @@
                                (recur (conj acc (map rest curr))))))]
       (map get-diag (concat lower-diagonals upper-diagonals))))
 
+(defn get-all-horizontal-subs [m]
+  (loop [acc [m]]
+    (let [curr (last acc)]
+      (if (empty? (first curr)) acc
+        (recur (conj acc (map rest curr)))))))
+
+(defn get-subs [m]
+  (if (empty? m) m
+    (concat (get-all-horizontal-subs m)
+            (get-subs (rest m)))))
+
+(defn has-x-top-left [m]
+  (blk
+    (if (< (count m) 3)
+      (return false))
+
+    (const [row1 row2 row3 & rest] m)
+    (assert (= (count row1)
+               (count row2)
+               (count row3)))
+
+    (if (< (count row1) 3)
+      (return false))
+
+    (const [a _ b] row1)
+    (const [_ c _] row2)
+    (const [d _ e] row3)
+
+    (or (and (= (str a c e) "SAM")
+             (= (str b c d) "SAM"))
+        (and (= (str b c d) "SAM")
+             (= (str e c a) "SAM"))
+        (and (= (str e c a) "SAM")
+             (= (str d c b) "SAM"))
+        (and (= (str d c b) "SAM")
+             (= (str a c e) "SAM")))))
 (def input
   (->> (slurp "resources/day-04-input.txt")
        (split-lines)
        (mapv seq)))
+
+(->>
+  (get-subs input)
+  (map has-x-top-left)
+  (filter (fn [x] x))
+  (count))
 
 (def rows input)
 (def cols (apply map vector input))
