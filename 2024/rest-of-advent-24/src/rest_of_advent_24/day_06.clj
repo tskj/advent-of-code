@@ -2,7 +2,7 @@
   (:require
    [clojure.string :refer [split-lines]]
    [rest-of-advent-24.utils.elves :refer [includes]]
-   [rest-of-advent-24.utils.macros :refer [boop]]))
+   [rest-of-advent-24.utils.macros :refer [blk boop]]))
 
 (def m
   (->> (slurp "resources/day-06-input.txt")
@@ -24,14 +24,13 @@
                   (reset! pos [y x]))))
     @pos))
 
-(defn get-guard-direction [m p]
-  (let [guard-char (get-in m p)]
-    ;;(assert (->> guard-chars (includes guard-char)) "found something else than a guard")
-    (case (.indexOf guard-chars guard-char)
-      0 [-1 0]
-      1 [0 1]
-      2 [1 0]
-      3 [0 -1])))
+(defn get-guard-direction [guard-char]
+  (assert (->> guard-chars (includes guard-char)) (str "found something else than a guard: " guard-char))
+  (case (.indexOf guard-chars guard-char)
+    0 [-1 0]
+    1 [0 1]
+    2 [1 0]
+    3 [0 -1]))
 
 (defn add [[y x] [dy dx]]
   [(+ y dy) (+ x dx)])
@@ -48,7 +47,7 @@
 (defn is-blocked? [m p]
   (= (get-in m p) \#))
 
-(defn is-off-map? [m [y x]]
+(defn is-off-map? [[y x]]
   (cond
     (< y 0) true
     (< x 0) true
@@ -59,28 +58,55 @@
 (defn write [m p c]
   (update-in m p (fn [_] c)))
 
-(defn update-state-by-walking [m]
-  (let [guard-pos (get-guard-coords m)]
-    (if (nil? guard-pos)
-        m
-        (let [guard-dir (get-guard-direction m guard-pos)
-              new-potential-pos (add guard-pos guard-dir)]
-          (if (is-off-map? m new-potential-pos)
-            (-> m
-                (write guard-pos \X))
-            (if (is-blocked? m new-potential-pos)
-              (let [new-position (add guard-pos (rotate-dir-clockwise guard-dir))]
-                (-> m
-                    (write new-position (rotate-guard-clockwise (get-in m guard-pos)))
-                    (write guard-pos \X)))
-              (-> m
-                  (write new-potential-pos (get-in m guard-pos))
-                  (write guard-pos \X))))))))
+; (defn update-state-by-walking [m]
+;   (let [guard-pos (get-guard-coords m)]
+;     (if (nil? guard-pos)
+;         m
+;         (let [guard-dir (get-guard-direction m guard-pos)
+;               new-potential-pos (add guard-pos guard-dir)]
+;           (if (is-off-map? m new-potential-pos)
+;             (-> m
+;                 (write guard-pos \X))
+;             (if (is-blocked? m new-potential-pos)
+;               (let [new-position (add guard-pos (rotate-dir-clockwise guard-dir))]
+;                 (-> m
+;                     (write new-position (rotate-guard-clockwise (get-in m guard-pos)))
+;                     (write guard-pos \X)))
+;               (-> m
+;                   (write new-potential-pos (get-in m guard-pos))
+;                   (write guard-pos \X))))))))
+
+(def initial-guard-pos (get-guard-coords m))
+(def initial-guard-char (get-in m initial-guard-pos))
+
+(defn update-state [m char-pos]
+  (blk
+    (const-try [char pos] char-pos)
+    (const dir (get-guard-direction char))
+    (const new-potential-pos (add pos dir))
+    (if (is-off-map? new-potential-pos) (return nil))
+    (if (is-blocked? m new-potential-pos)
+      (let [new-pos (add pos (rotate-dir-clockwise dir))
+            new-char (rotate-guard-clockwise char)]
+        [new-char new-pos])
+      [char new-potential-pos])))
+
+(def init [initial-guard-char initial-guard-pos])
+
+(def poss (atom []))
+(boop [char-pos init] (some? char-pos) ((update-state m char-pos))
+  (blk
+    (const [char pos] char-pos)
+    (swap! poss conj pos)
+    pos))
 
 (time
-  (->>
-    (boop [m m prev-m nil] (not= m prev-m) ((update-state-by-walking m) m)
-          m)
-    (apply concat)
-    (filter (fn [x] (= x \X)))
-    (count)))
+  (count (set @poss)))
+
+; (time
+;   (->>
+;     (boop [m m prev-m nil] (not= m prev-m) ((update-state-by-walking m) m)
+;           m)
+;     (apply concat)
+;     (filter (fn [x] (= x \X)))
+;     (count)))
