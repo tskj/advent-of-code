@@ -112,17 +112,18 @@
 
 (defn loops? [[char pos]]
   (let [pound-sign (add pos (get-guard-direction char))]
-    (loop [char-poss []
-           char-pos init
-           counter 0]
-      (when (= (mod counter 1000) 0) (println (str "count: " counter)))
-      (blk
-        (const new-char-pos (update-state m char-pos pound-sign))
-        (if (nil? new-char-pos) nil)
-        (if (contains? (set char-poss) new-char-pos)
-          (do (assert (not= (get-in m pound-sign) \#) "it should not be possible to create loop by placing a pound on a pound")
-              pound-sign))
-        (recur (conj char-poss new-char-pos) new-char-pos (inc counter))))))
+    (if (is-off-map? pound-sign) nil
+      (loop [char-poss []
+             char-pos init
+             counter 0]
+        (when (= (mod counter 1000) 0) (println (str "count: " counter)))
+        (blk
+          (const new-char-pos (update-state m char-pos pound-sign))
+          (if (nil? new-char-pos) nil)
+          (if (contains? (set char-poss) new-char-pos)
+            (do (assert (not= (get-in m pound-sign) \#) "it should not be possible to create loop by placing a pound on a pound")
+                pound-sign))
+          (recur (conj char-poss new-char-pos) new-char-pos (inc counter)))))))
 
 (->> @char-poss
      ; (filter (fn [[char pos]] (not= pos initial-guard-pos)))
