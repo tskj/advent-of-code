@@ -1,6 +1,6 @@
 (ns rest-of-advent-24.day-06
   (:require
-   [clojure.string :refer [join split-lines]]
+   [clojure.string :refer [split-lines]]
    [rest-of-advent-24.utils.elves :refer [includes]]
    [rest-of-advent-24.utils.macros :refer [blk boop]]))
 
@@ -54,9 +54,6 @@
     (>= y y-size) true
     (>= x x-size) true
     :else false))
-
-(defn write [m p c]
-  (update-in m p (fn [_] c)))
 
 (def initial-guard-pos (get-guard-coords m))
 (def initial-guard-char (get-in m initial-guard-pos))
