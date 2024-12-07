@@ -58,38 +58,45 @@
 (defn write [m p c]
   (update-in m p (fn [_] c)))
 
-; (defn update-state-by-walking [m]
-;   (let [guard-pos (get-guard-coords m)]
-;     (if (nil? guard-pos)
-;         m
-;         (let [guard-dir (get-guard-direction m guard-pos)
-;               new-potential-pos (add guard-pos guard-dir)]
-;           (if (is-off-map? m new-potential-pos)
-;             (-> m
-;                 (write guard-pos \X))
-;             (if (is-blocked? m new-potential-pos)
-;               (let [new-position (add guard-pos (rotate-dir-clockwise guard-dir))]
-;                 (-> m
-;                     (write new-position (rotate-guard-clockwise (get-in m guard-pos)))
-;                     (write guard-pos \X)))
-;               (-> m
-;                   (write new-potential-pos (get-in m guard-pos))
-;                   (write guard-pos \X))))))))
-
 (def initial-guard-pos (get-guard-coords m))
 (def initial-guard-char (get-in m initial-guard-pos))
 
-(defn update-state [m char-pos]
-  (blk
-    (const-try [char pos] char-pos)
-    (const dir (get-guard-direction char))
-    (const new-potential-pos (add pos dir))
-    (if (is-off-map? new-potential-pos) (return nil))
-    (if (is-blocked? m new-potential-pos)
-      (let [new-pos (add pos (rotate-dir-clockwise dir))
-            new-char (rotate-guard-clockwise char)]
-        [new-char new-pos])
-      [char new-potential-pos])))
+(defn update-state
+  ([m char-pos]
+   (blk
+     (assert (vector? m))
+     (assert (vector? (first m)))
+     (assert (= (count char-pos) 2))
+
+     (const-try [char pos] char-pos)
+     (const dir (get-guard-direction char))
+     (const new-potential-pos (add pos dir))
+
+     (if (is-off-map? new-potential-pos) (return nil))
+
+     (if (is-blocked? m new-potential-pos)
+       (let [new-pos (add pos (rotate-dir-clockwise dir))
+             new-char (rotate-guard-clockwise char)]
+         [new-char new-pos])
+       [char new-potential-pos])))
+
+  ([m char-pos pound-pos]
+   (blk
+     (assert (vector? m))
+     (assert (vector? (first m)))
+     (assert (= (count char-pos) 2))
+
+     (const-try [char pos] char-pos)
+     (const dir (get-guard-direction char))
+     (const new-potential-pos (add pos dir))
+
+     (if (is-off-map? new-potential-pos) (return nil))
+
+     (if (or (= new-potential-pos pound-pos) (is-blocked? m new-potential-pos))
+       (let [new-pos (add pos (rotate-dir-clockwise dir))
+             new-char (rotate-guard-clockwise char)]
+         [new-char new-pos])
+       [char new-potential-pos]))))
 
 (def init [initial-guard-char initial-guard-pos])
 
@@ -97,30 +104,33 @@
 (boop [char-pos init] (some? char-pos) ((update-state m char-pos))
   (blk
     (const [char pos] char-pos)
-    (const look-at-pos (add pos (get-guard-direction char)))
-    (when (not (is-off-map? look-at-pos))
-      (swap! char-poss conj [char pos]))
-    pos))
+    (swap! char-poss conj [char pos])))
 
 ; (doseq [x
 ;         (->> @char-poss (reduce (fn [m [char pos]] (update-in m pos (fn [_] char))) m))]
 ;   (println (apply str x)))
 
-(defn loops? [m char-poss char-pos]
-  (loop [m m
-         char-poss char-poss
-         char-pos char-pos]
-    (let [new-char-pos (update-state m char-pos)]
-      (if (nil? new-char-pos) false
-        (if (contains? (set char-poss) new-char-pos) true
-          (recur m (conj char-poss new-char-pos) new-char-pos))))))
+(defn loops? [[char pos]]
+  (let [pound-sign (add pos (get-guard-direction char))]
+    (loop [char-poss []
+           char-pos init
+           counter 0]
+      (when (= (mod counter 1000) 0) (println (str "count: " counter)))
+      (blk
+        (const new-char-pos (update-state m char-pos pound-sign))
+        (if (nil? new-char-pos) nil)
+        (if (contains? (set char-poss) new-char-pos)
+          (do (assert (not= (get-in m pound-sign) \#) "it should not be possible to create loop by placing a pound on a pound")
+              pound-sign))
+        (recur (conj char-poss new-char-pos) new-char-pos (inc counter))))))
 
-(->> @char-poss)
-     ;; (filter (fn [[char pos]] (not= pos initial-guard-pos)))
-     ; (map (fn [[char pos]] [[char pos] (update-in m (add pos (get-guard-direction char)) (fn [_] \#))])))
-     ; (map (fn [[char-pos m]] (loops? m [] char-pos)))
-     ; (filter true?)
-     ; (count))
+(->> @char-poss
+     ; (filter (fn [[char pos]] (not= pos initial-guard-pos)))
+     (map-indexed (fn [idx char-pos] (println (str "iteration number: " idx)) (loops? char-pos)))
+     (filter some?)
+     (filter #(not= initial-guard-pos %))
+     (set)
+     (count))
 
 ; (time
 ;   (->>
