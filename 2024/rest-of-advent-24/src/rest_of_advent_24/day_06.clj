@@ -1,6 +1,6 @@
 (ns rest-of-advent-24.day-06
   (:require
-   [clojure.string :refer [split-lines]]
+   [clojure.string :refer [join split-lines]]
    [rest-of-advent-24.utils.elves :refer [includes]]
    [rest-of-advent-24.utils.macros :refer [blk boop]]))
 
@@ -100,43 +100,34 @@
 
 (def init [initial-guard-char initial-guard-pos])
 
-(def char-poss (atom []))
+(def obstacle-location (atom {}))
 (boop [char-pos init] (some? char-pos) ((update-state m char-pos))
   (blk
     (const [char pos] char-pos)
-    (swap! char-poss conj [char pos])))
+    (const pound-sign (add pos (get-guard-direction char)))
+    (if (not (contains? @obstacle-location pound-sign))
+      (swap! obstacle-location conj [pound-sign [char pos]]))))
 
 ; (doseq [x
 ;         (->> @char-poss (reduce (fn [m [char pos]] (update-in m pos (fn [_] char))) m))]
 ;   (println (apply str x)))
 
-(defn loops? [[char pos]]
-  (let [pound-sign (add pos (get-guard-direction char))]
-    (if (is-off-map? pound-sign) nil
-      (loop [char-poss []
-             char-pos init
-             counter 0]
-        (when (= (mod counter 1000) 0) (println (str "count: " counter)))
-        (blk
-          (const new-char-pos (update-state m char-pos pound-sign))
-          (if (nil? new-char-pos) nil)
-          (if (contains? (set char-poss) new-char-pos)
-            (do (assert (not= (get-in m pound-sign) \#) "it should not be possible to create loop by placing a pound on a pound")
-                pound-sign))
-          (recur (conj char-poss new-char-pos) new-char-pos (inc counter)))))))
+(defn loops? [pound-sign char-pos]
+  (if (is-off-map? pound-sign) nil
+    (loop [char-poss []
+           char-pos char-pos
+           counter 0]
+      (when (= (mod counter 1000) 0) (println (str "count: " counter)))
+      (blk
+        (const new-char-pos (update-state m char-pos pound-sign))
+        (if (nil? new-char-pos) nil)
+        (if (contains? (set char-poss) new-char-pos)
+            true)
+        (recur (conj char-poss new-char-pos) new-char-pos (inc counter))))))
 
-(->> @char-poss
-     ; (filter (fn [[char pos]] (not= pos initial-guard-pos)))
-     (map-indexed (fn [idx char-pos] (println (str "iteration number: " idx)) (loops? char-pos)))
-     (filter some?)
-     (filter #(not= initial-guard-pos %))
-     (set)
+(->> @obstacle-location
+     (filter (fn [[pound cv]] (not= pound initial-guard-pos)))
+     (filter (fn [[pound cv]] (not= \# (get-in m pound))))
+     (map-indexed (fn [idx [pound char-pos]] (println (str "iteration number: " idx)) (loops? pound char-pos)))
+     (filter true?)
      (count))
-
-; (time
-;   (->>
-;     (boop [m m prev-m nil] (not= m prev-m) ((update-state-by-walking m) m)
-;           m)
-;     (apply concat)
-;     (filter (fn [x] (= x \X)))
-;     (count)))
