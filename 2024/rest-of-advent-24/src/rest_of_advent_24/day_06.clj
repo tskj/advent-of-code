@@ -93,15 +93,34 @@
 
 (def init [initial-guard-char initial-guard-pos])
 
-(def poss (atom []))
+(def char-poss (atom []))
 (boop [char-pos init] (some? char-pos) ((update-state m char-pos))
   (blk
     (const [char pos] char-pos)
-    (swap! poss conj pos)
+    (const look-at-pos (add pos (get-guard-direction char)))
+    (when (not (is-off-map? look-at-pos))
+      (swap! char-poss conj [char pos]))
     pos))
 
-(time
-  (count (set @poss)))
+; (doseq [x
+;         (->> @char-poss (reduce (fn [m [char pos]] (update-in m pos (fn [_] char))) m))]
+;   (println (apply str x)))
+
+(defn loops? [m char-poss char-pos]
+  (loop [m m
+         char-poss char-poss
+         char-pos char-pos]
+    (let [new-char-pos (update-state m char-pos)]
+      (if (nil? new-char-pos) false
+        (if (contains? (set char-poss) new-char-pos) true
+          (recur m (conj char-poss new-char-pos) new-char-pos))))))
+
+(->> @char-poss)
+     ;; (filter (fn [[char pos]] (not= pos initial-guard-pos)))
+     ; (map (fn [[char pos]] [[char pos] (update-in m (add pos (get-guard-direction char)) (fn [_] \#))])))
+     ; (map (fn [[char-pos m]] (loops? m [] char-pos)))
+     ; (filter true?)
+     ; (count))
 
 ; (time
 ;   (->>
