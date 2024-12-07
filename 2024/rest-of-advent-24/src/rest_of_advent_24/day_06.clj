@@ -112,19 +112,20 @@
 (defn loops? [pound-sign char-pos]
   (if (is-off-map? pound-sign) nil
     (loop [char-poss []
-           char-pos char-pos
-           counter 0]
-      (when (= (mod counter 1000) 0) (println (str "count: " counter)))
+           char-pos char-pos]
       (blk
         (const new-char-pos (update-state m char-pos pound-sign))
         (if (nil? new-char-pos) nil)
         (if (contains? (set char-poss) new-char-pos)
             true)
-        (recur (conj char-poss new-char-pos) new-char-pos (inc counter))))))
+        (if (not= (first new-char-pos) (first char-pos))
+          (recur (conj char-poss new-char-pos) new-char-pos)
+          (recur char-poss new-char-pos))))))
 
-(->> @obstacle-location
-     (filter (fn [[pound cv]] (not= pound initial-guard-pos)))
-     (filter (fn [[pound cv]] (not= \# (get-in m pound))))
-     (map-indexed (fn [idx [pound char-pos]] (println (str "iteration number: " idx)) (loops? pound char-pos)))
-     (filter true?)
-     (count))
+(time
+  (->> @obstacle-location
+       (filter (fn [[pound cv]] (not= pound initial-guard-pos)))
+       (filter (fn [[pound cv]] (not= \# (get-in m pound))))
+       (map-indexed (fn [idx [pound char-pos]] (when (= (mod idx 100) 0) (println "iteration number: " idx)) (loops? pound char-pos)))
+       (filter true?)
+       (count)))
