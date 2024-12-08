@@ -138,7 +138,7 @@ fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
 fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
     if (isOffMap(obs)) return false;
 
-    var char_posses = std.ArrayList(CharacterPosition).init(alloc);
+    var char_posses = std.ArrayList(Position).init(alloc);
     defer char_posses.deinit();
 
     var curr_cp = cp;
@@ -148,11 +148,11 @@ fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
 
         if (new_cp.dir != curr_cp.dir) {
             for (char_posses.items) |item| {
-                if (item.eql(new_cp)) {
+                if (item.eql(curr_cp.pos)) {
                     return true;
                 }
             }
-            try char_posses.append(new_cp);
+            try char_posses.append(curr_cp.pos);
         }
         curr_cp = new_cp;
     }
@@ -180,25 +180,26 @@ pub fn main() !void {
     std.debug.print("\nthe intial guard: {}\n", .{initial_guard});
     std.debug.print("\nguard is a block? {}\n", .{isBlock(initial_guard.pos)});
 
-    var path_locations = std.AutoHashMap(Position, CharacterPosition).init(allocator);
+    var path_locations = std.ArrayList(Position).init(allocator);
     defer path_locations.deinit();
 
     var cp: ?CharacterPosition = initial_guard;
     while (cp != null) : (cp = nextState(cp.?, null)) {
-        if (path_locations.get(cp.?.pos) == null) {
+        i = 0;
+        const exists = while (i < path_locations.items.len) : (i += 1) {
+            if (path_locations.items[i].eql(cp.?.pos)) break true;
+        } else false;
+        if (!exists) {
             if (!cp.?.pos.eql(initial_guard.pos)) {
-                try path_locations.put(cp.?.pos, cp.?);
+                try path_locations.append(cp.?.pos);
             }
         }
     }
 
     var counter: usize = 0;
 
-    var it = path_locations.iterator();
-    while (it.next()) |entry| {
-        const obstacle = entry.key_ptr;
-        // const char_pos = entry.value_ptr;
-        if (try loops(allocator, obstacle.*, initial_guard)) {
+    for (path_locations.items) |obstacle| {
+        if (try loops(allocator, obstacle, initial_guard)) {
             counter += 1;
         }
     }
