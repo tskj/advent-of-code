@@ -111,12 +111,12 @@
 
 (defn loops? [pound-sign char-pos]
   (if (is-off-map? pound-sign) nil
-    (loop [char-poss []
+    (loop [char-poss #{}
            char-pos char-pos]
       (blk
         (const new-char-pos (update-state m char-pos pound-sign))
         (if (nil? new-char-pos) nil)
-        (if (contains? (set char-poss) new-char-pos)
+        (if (contains? char-poss new-char-pos)
             true)
         (if (not= (first new-char-pos) (first char-pos))
           (recur (conj char-poss new-char-pos) new-char-pos)

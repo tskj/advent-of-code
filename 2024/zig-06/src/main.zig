@@ -188,8 +188,8 @@ pub fn main() !void {
     var it = obstacle_locations.iterator();
     while (it.next()) |entry| {
         const obstacle = entry.key_ptr;
-        // const char_pos = entry.value_ptr;
-        if (try loops(allocator, obstacle.*, initial_guard)) {
+        const char_pos = entry.value_ptr;
+        if (try loops(allocator, obstacle.*, char_pos.*)) {
             counter += 1;
         }
     }
