@@ -67,5 +67,5 @@
         result
         0)))
 
-(->> (mapv is-valid? input))
-     ; (reduce +))
+(->> (mapv is-valid? input)
+     (reduce +))
