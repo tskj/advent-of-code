@@ -116,6 +116,7 @@ fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
     if (blocked_by_obstacle or literal_block) {
         const new_dir = rotate(cp.dir);
         const new_pos = add(cp.pos, new_dir);
+        assert(isOnMap(new_pos));
         return CharacterPosition{
             .pos = new_pos,
             .dir = new_dir,
@@ -140,11 +141,13 @@ fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
         if (new_cp == null) return false;
 
         for (char_posses.items) |item| {
-            if (item.eql(new_cp.?)) return true;
+            if (item.eql(curr_cp)) {
+                return true;
+            }
         }
 
         if (new_cp.?.dir != curr_cp.dir) {
-            try char_posses.append(new_cp.?);
+            try char_posses.append(curr_cp);
         }
         curr_cp = new_cp.?;
     }
@@ -179,7 +182,9 @@ pub fn main() !void {
     while (cp != null) : (cp = nextState(cp.?, null)) {
         const look_at = add(cp.?.pos, cp.?.dir);
         if (obstacle_locations.get(look_at) == null) {
-            if (!look_at.eql(initial_guard.pos)) try obstacle_locations.put(look_at, cp.?);
+            if (!look_at.eql(initial_guard.pos) and isOnMap(look_at) and !isBlock(look_at)) {
+                try obstacle_locations.put(look_at, cp.?);
+            }
         }
     }
 

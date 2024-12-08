@@ -126,6 +126,7 @@
   (->> @obstacle-location
        (filter (fn [[pound cv]] (not= pound initial-guard-pos)))
        (filter (fn [[pound cv]] (not= \# (get-in m pound))))
+       (filter (fn [[pound cv]] (not (is-off-map? pound))))
        (map-indexed (fn [idx [pound char-pos]] (when (= (mod idx 100) 0) (println "iteration number: " idx)) (loops? pound char-pos)))
        (filter true?)
        (count)))
