@@ -143,19 +143,18 @@ fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
 
     var curr_cp = cp;
     while (true) {
-        const new_cp = nextState(curr_cp, obs);
-        if (new_cp == null) return false;
+        const _new_cp = nextState(curr_cp, obs);
+        const new_cp = _new_cp orelse return false;
 
-        for (char_posses.items) |item| {
-            if (item.eql(curr_cp)) {
-                return true;
+        if (new_cp.dir != curr_cp.dir) {
+            for (char_posses.items) |item| {
+                if (item.eql(new_cp)) {
+                    return true;
+                }
             }
+            try char_posses.append(new_cp);
         }
-
-        if (new_cp.?.dir != curr_cp.dir) {
-            try char_posses.append(curr_cp);
-        }
-        curr_cp = new_cp.?;
+        curr_cp = new_cp;
     }
 }
 
