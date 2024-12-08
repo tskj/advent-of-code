@@ -1,6 +1,5 @@
 (ns rest-of-advent-24.day-07
   (:require
-   [clojure.math :refer [pow]]
    [clojure.string :refer [split split-lines trim]]
    [rest-of-advent-24.utils.macros :refer [blk]]))
 

@@ -64,10 +64,19 @@
       (doseq [other antenna-coords]
         (when (not= yx other)
           (blk
+            (println "doing stuff" yx)
             (const dir (minus other yx))
-            (const antinode (add yx (mul 2 dir)))
-            (when (is-on-map? antinode)
-              (swap! antinodes conj antinode))))))
+            (const antinode (atom (add yx dir)))
+            (loop [x nil]
+              (println @antinodes)
+              (when (is-on-map? @antinode)
+                (swap! antinodes conj @antinode)
+                (recur nil)))
+            (const antinode* (atom (add yx (mul -1 dir))))
+            (loop [x nil]
+              (when (is-on-map? @antinode*)
+                (swap! antinodes conj @antinode*)
+                (recur nil)))))))
     @antinodes))
 
 (->> antenna-with-their-coords

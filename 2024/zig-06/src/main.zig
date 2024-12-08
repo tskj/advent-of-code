@@ -117,6 +117,12 @@ fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
         const new_dir = rotate(cp.dir);
         const new_pos = add(cp.pos, new_dir);
         assert(isOnMap(new_pos));
+        if (isBlock(new_pos)) {
+            return nextState(CharacterPosition{
+                .pos = cp.pos,
+                .dir = new_dir,
+            }, obstacle);
+        }
         return CharacterPosition{
             .pos = new_pos,
             .dir = new_dir,
@@ -175,26 +181,25 @@ pub fn main() !void {
     std.debug.print("\nthe intial guard: {}\n", .{initial_guard});
     std.debug.print("\nguard is a block? {}\n", .{isBlock(initial_guard.pos)});
 
-    var obstacle_locations = std.AutoHashMap(Position, CharacterPosition).init(allocator);
-    defer obstacle_locations.deinit();
+    var path_locations = std.AutoHashMap(Position, CharacterPosition).init(allocator);
+    defer path_locations.deinit();
 
     var cp: ?CharacterPosition = initial_guard;
     while (cp != null) : (cp = nextState(cp.?, null)) {
-        const look_at = add(cp.?.pos, cp.?.dir);
-        if (obstacle_locations.get(look_at) == null) {
-            if (!look_at.eql(initial_guard.pos) and isOnMap(look_at) and !isBlock(look_at)) {
-                try obstacle_locations.put(look_at, cp.?);
+        if (path_locations.get(cp.?.pos) == null) {
+            if (!cp.?.pos.eql(initial_guard.pos)) {
+                try path_locations.put(cp.?.pos, cp.?);
             }
         }
     }
 
     var counter: usize = 0;
 
-    var it = obstacle_locations.iterator();
+    var it = path_locations.iterator();
     while (it.next()) |entry| {
         const obstacle = entry.key_ptr;
-        const char_pos = entry.value_ptr;
-        if (try loops(allocator, obstacle.*, char_pos.*)) {
+        // const char_pos = entry.value_ptr;
+        if (try loops(allocator, obstacle.*, initial_guard)) {
             counter += 1;
         }
     }
