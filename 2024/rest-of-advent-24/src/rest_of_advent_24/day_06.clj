@@ -101,9 +101,8 @@
 (boop [char-pos init] (some? char-pos) ((update-state m char-pos))
   (blk
     (const [char pos] char-pos)
-    (const pound-sign (add pos (get-guard-direction char)))
     (if (not (contains? @obstacle-location pound-sign))
-      (swap! obstacle-location conj [pound-sign [char pos]]))))
+      (swap! obstacle-location conj [pos [char pos]]))))
 
 ; (doseq [x
 ;         (->> @char-poss (reduce (fn [m [char pos]] (update-in m pos (fn [_] char))) m))]
@@ -112,14 +111,14 @@
 (defn loops? [pound-sign char-pos]
   (if (is-off-map? pound-sign) nil
     (loop [char-poss #{}
-           char-pos char-pos]
+           char-pos init]
       (blk
         (const new-char-pos (update-state m char-pos pound-sign))
         (if (nil? new-char-pos) nil)
-        (if (contains? char-poss new-char-pos)
-            true)
         (if (not= (first new-char-pos) (first char-pos))
-          (recur (conj char-poss new-char-pos) new-char-pos)
+          (if (contains? char-poss new-char-pos)
+              true
+              (recur (conj char-poss new-char-pos) new-char-pos))
           (recur char-poss new-char-pos))))))
 
 (time
