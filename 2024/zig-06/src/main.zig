@@ -30,7 +30,7 @@ const CharacterPosition = struct {
     }
 };
 
-var m: []const u8 = undefined;
+var m: []u8 = undefined;
 
 var w: usize = 0;
 var h: usize = 0;
@@ -107,13 +107,12 @@ fn isOnMap(p: Position) bool {
     return !isOffMap(p);
 }
 
-fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
+fn nextState(cp: CharacterPosition) ?CharacterPosition {
     const new_potential_position = add(cp.pos, cp.dir);
     if (isOffMap(new_potential_position)) return null;
 
     const literal_block = isBlock(new_potential_position);
-    const blocked_by_obstacle = if (obstacle != null) new_potential_position.eql(obstacle.?) else false;
-    if (blocked_by_obstacle or literal_block) {
+    if (literal_block) {
         const new_dir = rotate(cp.dir);
         const new_pos = add(cp.pos, new_dir);
         assert(isOnMap(new_pos));
@@ -121,7 +120,7 @@ fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
             return nextState(CharacterPosition{
                 .pos = cp.pos,
                 .dir = new_dir,
-            }, obstacle);
+            });
         }
         return CharacterPosition{
             .pos = new_pos,
@@ -135,16 +134,13 @@ fn nextState(cp: CharacterPosition, obstacle: ?Position) ?CharacterPosition {
     };
 }
 
-fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
-    assert(isOnMap(obs));
-    assert(!obs.eql(cp.pos));
-
+fn loops(alloc: std.mem.Allocator, cp: CharacterPosition) !bool {
     var char_posses = std.ArrayList(CharacterPosition).init(alloc);
     defer char_posses.deinit();
 
     var curr_cp = cp;
     while (true) {
-        const _new_cp = nextState(curr_cp, obs);
+        const _new_cp = nextState(curr_cp);
         const new_cp = _new_cp orelse return false;
 
         if (new_cp.dir != curr_cp.dir) {
@@ -176,16 +172,16 @@ pub fn main() !void {
         if (m[i] == '\n') h += 1;
     }
 
-    std.debug.print("the file\n{s}\nwidth {d}\nheight {d}\n", .{ m, w, h });
+    // std.debug.print("the file\n{s}\nwidth {d}\nheight {d}\n", .{ m, w, h });
     const initial_guard = getGuard();
-    std.debug.print("\nthe intial guard: {}\n", .{initial_guard});
-    std.debug.print("\nguard is a block? {}\n", .{isBlock(initial_guard.pos)});
+    // std.debug.print("\nthe intial guard: {}\n", .{initial_guard});
+    // std.debug.print("\nguard is a block? {}\n", .{isBlock(initial_guard.pos)});
 
     var path_locations = std.ArrayList(Position).init(allocator);
     defer path_locations.deinit();
 
     var cp: ?CharacterPosition = initial_guard;
-    while (cp != null) : (cp = nextState(cp.?, null)) {
+    while (cp != null) : (cp = nextState(cp.?)) {
         i = 0;
         const exists = while (i < path_locations.items.len) : (i += 1) {
             if (path_locations.items[i].eql(cp.?.pos)) break true;
@@ -195,23 +191,26 @@ pub fn main() !void {
         }
     }
 
-    std.debug.print("\ninitial path count: {d}\n", .{path_locations.items.len});
+    // std.debug.print("\ninitial path count: {d}\n", .{path_locations.items.len});
 
-    for (path_locations.items, 0..) |pl, idx| {
-        for (path_locations.items, 0..) |pl2, idx2| {
-            if (idx != idx2) {
-                assert(!pl.eql(pl2));
-            }
-        }
-    }
+    // for (path_locations.items, 0..) |pl, idx| {
+    //     for (path_locations.items, 0..) |pl2, idx2| {
+    //         if (idx != idx2) {
+    //             assert(!pl.eql(pl2));
+    //         }
+    //     }
+    // }
 
     var counter: usize = 0;
 
     for (path_locations.items) |obstacle| {
         if (!obstacle.eql(initial_guard.pos)) {
-            if (try loops(allocator, obstacle, initial_guard)) {
+            const current_thing = m[getOffset(obstacle)];
+            m[getOffset(obstacle)] = '#';
+            if (try loops(allocator, initial_guard)) {
                 counter += 1;
             }
+            m[getOffset(obstacle)] = current_thing;
         }
     }
 
