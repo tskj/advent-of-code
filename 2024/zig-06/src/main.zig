@@ -203,9 +203,45 @@ pub fn main() !void {
     //     }
     // }
 
-    var counter: usize = 0;
+    std.debug.print("how many?: {d}\n", .{path_locations.items.len});
 
-    for (path_locations.items) |obstacle| {
+    var result0: usize = 0;
+    var result1: usize = 0;
+    var result2: usize = 0;
+    var result3: usize = 0;
+    // var result4: usize = 0;
+    // var result5: usize = 0;
+
+    const thread0 = try std.Thread.spawn(.{}, run, .{ path_locations.items[0..1300], initial_guard, &result0 });
+    const thread1 = try std.Thread.spawn(.{}, run, .{ path_locations.items[1300..2600], initial_guard, &result1 });
+    const thread2 = try std.Thread.spawn(.{}, run, .{ path_locations.items[2600..3900], initial_guard, &result2 });
+    const thread3 = try std.Thread.spawn(.{}, run, .{ path_locations.items[3900..], initial_guard, &result3 });
+    // const thread4 = try std.Thread.spawn(.{}, run, .{ path_locations.items[3766..4566], initial_guard, &result4 });
+    // const thread5 = try std.Thread.spawn(.{}, run, .{ path_locations.items[4566..], initial_guard, &result5 });
+
+    thread0.join();
+    thread1.join();
+    thread2.join();
+    thread3.join();
+    // thread4.join();
+    // thread5.join();
+
+    var counter: usize = 0;
+    counter += result0;
+    counter += result1;
+    counter += result2;
+    counter += result3;
+    // counter += result4;
+    // counter += result5;
+
+    std.debug.print("\nresult is: {d}\n", .{counter});
+}
+
+fn run(obstacles: []Position, initial_guard: CharacterPosition, result: *usize) !void {
+    const allocator = std.heap.page_allocator;
+
+    var counter: usize = 0;
+    for (obstacles) |obstacle| {
         if (!obstacle.eql(initial_guard.pos)) {
             assert(!isBlock(obstacle));
             if (try loops(allocator, obstacle, initial_guard)) {
@@ -214,5 +250,5 @@ pub fn main() !void {
         }
     }
 
-    std.debug.print("\nresult is: {d}\n", .{counter});
+    result.* = counter;
 }
