@@ -107,20 +107,22 @@ fn isOnMap(p: Position) bool {
     return !isOffMap(p);
 }
 
-fn nextState(cp: CharacterPosition) ?CharacterPosition {
+fn nextState(cp: CharacterPosition, obs: ?Position) ?CharacterPosition {
     const new_potential_position = add(cp.pos, cp.dir);
     if (isOffMap(new_potential_position)) return null;
 
     const literal_block = isBlock(new_potential_position);
-    if (literal_block) {
+    const a = if (obs != null) obs.?.eql(new_potential_position) else false;
+    if (literal_block or a) {
         const new_dir = rotate(cp.dir);
         const new_pos = add(cp.pos, new_dir);
+        const b = if (obs != null) obs.?.eql(new_pos) else false;
         assert(isOnMap(new_pos));
-        if (isBlock(new_pos)) {
+        if (isBlock(new_pos) or b) {
             return nextState(CharacterPosition{
                 .pos = cp.pos,
                 .dir = new_dir,
-            });
+            }, obs);
         }
         return CharacterPosition{
             .pos = new_pos,
@@ -134,13 +136,13 @@ fn nextState(cp: CharacterPosition) ?CharacterPosition {
     };
 }
 
-fn loops(alloc: std.mem.Allocator, cp: CharacterPosition) !bool {
+fn loops(alloc: std.mem.Allocator, obs: Position, cp: CharacterPosition) !bool {
     var char_posses = std.ArrayList(Position).init(alloc);
     defer char_posses.deinit();
 
     var curr_cp = cp;
     while (true) {
-        const _new_cp = nextState(curr_cp);
+        const _new_cp = nextState(curr_cp, obs);
         const new_cp = _new_cp orelse return false;
 
         if (new_cp.dir != curr_cp.dir) {
@@ -181,7 +183,7 @@ pub fn main() !void {
     defer path_locations.deinit();
 
     var cp: ?CharacterPosition = initial_guard;
-    while (cp != null) : (cp = nextState(cp.?)) {
+    while (cp != null) : (cp = nextState(cp.?, null)) {
         i = 0;
         const exists = while (i < path_locations.items.len) : (i += 1) {
             if (path_locations.items[i].eql(cp.?.pos)) break true;
@@ -205,13 +207,10 @@ pub fn main() !void {
 
     for (path_locations.items) |obstacle| {
         if (!obstacle.eql(initial_guard.pos)) {
-            const current_thing = m[getOffset(obstacle)];
             assert(!isBlock(obstacle));
-            m[getOffset(obstacle)] = '#';
-            if (try loops(allocator, initial_guard)) {
+            if (try loops(allocator, obstacle, initial_guard)) {
                 counter += 1;
             }
-            m[getOffset(obstacle)] = current_thing;
         }
     }
 
