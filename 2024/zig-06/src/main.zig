@@ -135,7 +135,7 @@ fn nextState(cp: CharacterPosition) ?CharacterPosition {
 }
 
 fn loops(alloc: std.mem.Allocator, cp: CharacterPosition) !bool {
-    var char_posses = std.ArrayList(CharacterPosition).init(alloc);
+    var char_posses = std.ArrayList(Position).init(alloc);
     defer char_posses.deinit();
 
     var curr_cp = cp;
@@ -145,11 +145,11 @@ fn loops(alloc: std.mem.Allocator, cp: CharacterPosition) !bool {
 
         if (new_cp.dir != curr_cp.dir) {
             for (char_posses.items) |item| {
-                if (item.eql(new_cp)) {
+                if (item.eql(curr_cp.pos)) {
                     return true;
                 }
             }
-            try char_posses.append(new_cp);
+            try char_posses.append(curr_cp.pos);
         }
         curr_cp = new_cp;
     }
