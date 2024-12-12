@@ -16,9 +16,9 @@
          (fn [idy row]
            (->> row (map-indexed (fn [idx _] [idy idx])))))
        (apply concat)
-       (into #{})))
+       (vec)))
 
-(defn is-on-map? [c] (indices c))
+(defn is-on-map? [c] ((set indices) c))
 
 (def directions
   [[-1 0]
@@ -30,73 +30,71 @@
   [(+ a c)
    (+ b d)])
 
-(defn create-region [c]
+(defn is-adjacent? [c3 c4]
+  (and (is-on-map? c3)
+       (is-on-map? c4)
+       (->> directions
+            (map (partial add c4))
+            (some (partial = c3)))))
+
+(defn create-region [map c]
   (let [plant (get-plant c)]
-    (loop [current-region #{c}]
+    (if (not (map plant))
+      (conj map [plant [#{c}]])
+      (let [regions (map plant)
+            idx (->> regions (keep-indexed (fn [idx region] (when (some (partial is-adjacent? c) region) idx)))
+                             (first))]
+          (if idx
+              (update-in map [plant idx] (fn [region] (conj region c)))
+              (update-in map [plant] (fn [regions] (conj regions #{c}))))))))
 
-      (let [new-plant-coords (->> directions
-                                  (mapcat (fn [dir] (->> current-region (map #(add % dir)))))
-                                  (filter is-on-map?)
-                                  (filter (fn [new-c] (= plant (get-plant new-c)))))
-            new-region (into current-region new-plant-coords)]
+(defn vec-remove
+  "remove elem in coll"
+  [pos coll]
+  (assert (vector? coll))
+  (into (subvec coll 0 pos) (subvec coll (inc pos))))
 
-        (if (= current-region new-region)
-            current-region
-            (recur new-region))))))
+(defn join-regions [regions]
+  (->> regions
+    (reduce (fn [acc region]
+              (if (empty? acc)
+                [region]
+                (let [cart (fn [s1 s2] (->> s1 (mapcat (fn [a]
+                                                         (->> s2 (mapcat (fn [b]
+                                                                          [[a b]])))))))
+                      index-of-adjacent (->> acc
+                                             (keep-indexed
+                                               (fn [idx r]
+                                                 (when (some #(apply is-adjacent? %) (cart r region))
+                                                   idx)))
+                                             (first))]
+                 (if index-of-adjacent
+                  (conj (vec-remove index-of-adjacent acc)
+                        (into (get acc index-of-adjacent) region))
+                  (conj acc
+                        region)))))
+            [])))
 
 (def regions
   (->> indices
-       (map create-region)
-       (into #{})))
-
-(->> regions
-     (group-by (comp get-plant first)))
-
-(defn edges [c]
-  [#{c              (add c [0 1])}
-   #{c              (add c [1 0])}
-   #{(add c [0 1])  (add c [1 1])}
-   #{(add c [1 0])  (add c [1 1])}])
-
-(defn join-edge [e1 e2]
-  (let [all-corners (concat e1 e2)]
-    (->> all-corners
-        (filter (fn [corner] (= 1 (count (filter #(= % corner) all-corners)))))
-        (into #{}))))
-
-(defn share-corner? [e1 e2]
-  (let [all-corners (into #{} (concat e1 e2))]
-    (not= (count all-corners)
-          4)))
-
-(defn orientation [edge]
-  (let [[y x] (first edge)
-        [a b] (second edge)]
-    (if (= (- y a) 0)
-      :horizontal
-      :vertical)))
-
-
-(defn join-edges [edges]
-  (->> edges
-       (reduce (fn [acc edge]
-                  (let [e (->> acc (some (fn [e] (and (= (orientation e) (orientation edge))
-                                                      (share-corner? e edge)
-                                                      e))))
-                        acc-without-e (->> acc (filter #(not= % e)))]
-                    (if e
-                      (conj acc-without-e (join-edge e edge))
-                      (conj acc edge))))
-               [])))
+       (reduce create-region {})
+       (map (fn [[k v]] [k (join-regions v)]))
+       (into {})))
 
 (defn calc-area [region] (count region))
 (defn calc-perimeter [region]
-  (let [edges-for-each-plant (->> region (mapcat edges))
-        appears-only-once?   (fn [edge] (= 1 (count (filter #(= edge %) edges-for-each-plant))))
-        perimeter            (->> edges-for-each-plant (filter appears-only-once?)
-                                                       (join-edges))]
-    (count perimeter)))
+  (->> region
+       (map (fn [c]
+              (- 4
+                 (->> directions
+                      (map (partial add c))
+                      (keep (fn [potential] (region potential)))
+                      (count)))))
+       (reduce +)))
 
-(->> regions
-     (map #(* (calc-area %) (calc-perimeter %)))
-     (reduce +))
+(time
+  (->> regions
+       (seq)
+       (mapcat second)
+       (map #(* (calc-area %) (calc-perimeter %)))
+       (reduce +)))
