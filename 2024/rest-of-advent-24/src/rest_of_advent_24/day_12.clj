@@ -37,13 +37,18 @@
             (map (partial add c4))
             (some (partial = c3)))))
 
+(defn take-first [transducer coll]
+  (->> coll
+       (transduce (comp transducer (take 1)) conj)
+       (first)))
+
 (defn create-region [map c]
   (let [plant (get-plant c)]
+    (println plant c)
     (if (not (map plant))
       (conj map [plant [#{c}]])
       (let [regions (map plant)
-            idx (->> regions (keep-indexed (fn [idx region] (when (some (partial is-adjacent? c) region) idx)))
-                             (first))]
+            idx (->> regions (take-first (keep-indexed (fn [idx region] (when (some #(is-adjacent? c %) region) idx)))))]
           (if idx
               (update-in map [plant idx] (fn [region] (conj region c)))
               (update-in map [plant] (fn [regions] (conj regions #{c}))))))))
@@ -63,11 +68,11 @@
                                                          (->> s2 (mapcat (fn [b]
                                                                           [[a b]])))))))
                       index-of-adjacent (->> acc
-                                             (keep-indexed
-                                               (fn [idx r]
-                                                 (when (some #(apply is-adjacent? %) (cart r region))
-                                                   idx)))
-                                             (first))]
+                                             (take-first
+                                               (keep-indexed
+                                                 (fn [idx r]
+                                                   (when (some #(apply is-adjacent? %) (cart r region))
+                                                     idx)))))]
                  (if index-of-adjacent
                   (conj (vec-remove index-of-adjacent acc)
                         (into (get acc index-of-adjacent) region))
@@ -81,6 +86,8 @@
        (map (fn [[k v]] [k (join-regions v)]))
        (into {})))
 
+regions
+
 (defn calc-area [region] (count region))
 (defn calc-perimeter [region]
   (->> region
@@ -92,9 +99,9 @@
                       (count)))))
        (reduce +)))
 
-(time
-  (->> regions
-       (seq)
-       (mapcat second)
-       (map #(* (calc-area %) (calc-perimeter %)))
-       (reduce +)))
+; (time
+;   (->> regions
+;        (seq)
+;        (mapcat second)
+;        (map #(* (calc-area %) (calc-perimeter %)))
+;        (reduce +)))
