@@ -84,9 +84,6 @@
          (pmap create-regions)
          (apply concat))))
 
-(nth regions 2)
-regions
-
 (def region-id-by-index
   (->> regions
        (map-indexed (fn [id region] (->> region (map (fn [idx] [idx id])))))
@@ -103,32 +100,50 @@ regions
 (defn calc-area [region-id] (count (nth regions region-id)))
 (defn calc-perimeter []
   (doseq [row row-major-indices]
-    (doseq [coord row]
-      (let [current-region-id (region-id-by-index coord)
-            current-plant     (get-plant coord)
-            plant-above       (get-plant (add coord [-1 0]))
-            plant-below       (get-plant (add coord [1 0]))
-            is-fence-above?   (not= current-plant plant-above)
-            is-fence-below?   (not= current-plant plant-below)]
+    (let [previous-fence-above (atom nil)
+          previous-fence-below (atom nil)]
+      (doseq [coord row]
+        (let [current-region-id (region-id-by-index coord)
+              current-plant     (get-plant coord)
+              plant-above       (get-plant (add coord [-1 0]))
+              plant-below       (get-plant (add coord [1 0]))
+              is-fence-above?   (not= current-plant plant-above)
+              is-fence-below?   (not= current-plant plant-below)]
 
-        (when is-fence-above?
-          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
-        (when is-fence-below?
-          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc)))))))
+          (when (and is-fence-above? (not= @previous-fence-above current-plant))
+            (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+          (when (and is-fence-below? (not= @previous-fence-below current-plant))
+            (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+
+          (if is-fence-above?
+            (reset! previous-fence-above current-plant)
+            (reset! previous-fence-above nil))
+          (if is-fence-below?
+            (reset! previous-fence-below current-plant)
+            (reset! previous-fence-below nil))))))
 
   (doseq [col col-major-indices]
-    (doseq [coord col]
-      (let [current-region-id (region-id-by-index coord)
-            current-plant     (get-plant coord)
-            plant-left        (get-plant (add coord [0 -1]))
-            plant-right       (get-plant (add coord [0 1]))
-            is-fence-left?    (not= current-plant plant-left)
-            is-fence-right?   (not= current-plant plant-right)]
+    (let [previous-fence-left   (atom nil)
+          previous-fence-right  (atom nil)]
+      (doseq [coord col]
+        (let [current-region-id (region-id-by-index coord)
+              current-plant     (get-plant coord)
+              plant-left        (get-plant (add coord [0 -1]))
+              plant-right       (get-plant (add coord [0 1]))
+              is-fence-left?    (not= current-plant plant-left)
+              is-fence-right?   (not= current-plant plant-right)]
 
-        (when is-fence-left?
-          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
-        (when is-fence-right?
-          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))))))
+          (when (and is-fence-left? (not= @previous-fence-left current-plant))
+            (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+          (when (and is-fence-right? (not= @previous-fence-right current-plant))
+            (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+
+          (if is-fence-left?
+            (reset! previous-fence-left current-plant)
+            (reset! previous-fence-left nil))
+          (if is-fence-right?
+            (reset! previous-fence-right current-plant)
+            (reset! previous-fence-right nil)))))))
 
 (calc-perimeter)
 
@@ -136,3 +151,15 @@ regions
   (->> @fences-by-region-id
        (map (fn [[region-id fences-n]] (* fences-n (calc-area region-id))))
        (reduce +)))
+
+; AAAAA|ZZZZZ
+;      +-~~~~
+; AAAAA|BBBBB      <- (begge tilfeller: prev-plant != curr-plant)
+;       ^
+;       prev-fence = false
+
+; QQQQQ|ZZZZZ
+; -~~~~+-~~~~
+; AAAAA|BBBBB      <- (begge tilfeller: prev-plant != curr-plant)
+;       ^
+;       prev-fence = true
