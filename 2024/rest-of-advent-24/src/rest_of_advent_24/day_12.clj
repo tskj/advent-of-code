@@ -18,6 +18,10 @@
        (apply concat)
        (vec)))
 
+(def regions-by-plant
+  (->> indices
+       (group-by get-plant)))
+
 (defn is-on-map? [c] ((set indices) c))
 
 (def directions
@@ -31,27 +35,14 @@
    (+ b d)])
 
 (defn is-adjacent? [c3 c4]
-  (and (is-on-map? c3)
-       (is-on-map? c4)
-       (->> directions
-            (map (partial add c4))
-            (some (partial = c3)))))
+  (->> directions
+       (map (partial add c4))
+       (some (partial = c3))))
 
 (defn take-first [transducer coll]
   (->> coll
        (transduce (comp transducer (take 1)) conj)
        (first)))
-
-(defn create-region [map c]
-  (let [plant (get-plant c)]
-    (println plant c)
-    (if (not (map plant))
-      (conj map [plant [#{c}]])
-      (let [regions (map plant)
-            idx (->> regions (take-first (keep-indexed (fn [idx region] (when (some #(is-adjacent? c %) region) idx)))))]
-          (if idx
-              (update-in map [plant idx] (fn [region] (conj region c)))
-              (update-in map [plant] (fn [regions] (conj regions #{c}))))))))
 
 (defn vec-remove
   "remove elem in coll"
@@ -59,34 +50,27 @@
   (assert (vector? coll))
   (into (subvec coll 0 pos) (subvec coll (inc pos))))
 
-(defn join-regions [regions]
-  (->> regions
-    (reduce (fn [acc region]
-              (if (empty? acc)
-                [region]
-                (let [cart (fn [s1 s2] (->> s1 (mapcat (fn [a]
-                                                         (->> s2 (mapcat (fn [b]
-                                                                          [[a b]])))))))
-                      index-of-adjacent (->> acc
-                                             (take-first
-                                               (keep-indexed
-                                                 (fn [idx r]
-                                                   (when (some #(apply is-adjacent? %) (cart r region))
-                                                     idx)))))]
-                 (if index-of-adjacent
-                  (conj (vec-remove index-of-adjacent acc)
-                        (into (get acc index-of-adjacent) region))
-                  (conj acc
-                        region)))))
-            [])))
+(defn create-regions [indices-by-plant]
+  (loop [input indices-by-plant
+         region #{}
+         regions []]
+    (if (empty? input) (if (> (count region) 0) (conj regions region) regions)
+        (let [adjacent-indices (->> input (filter (fn [c] (->> region (some #(is-adjacent? c %))))))]
+          (if (empty? adjacent-indices)
+            (recur (rest input)             ;; consume one
+                   #{(first input)}         ;; start new region
+                   (if (> (count region) 0) ;; put region aside
+                     (conj regions region)
+                     regions))
+            (recur (->> input (remove (set adjacent-indices))) ;; consume all adjacent
+                   (into region adjacent-indices)              ;; put in adjacent region
+                   regions))))))
 
 (def regions
-  (->> indices
-       (reduce create-region {})
-       (map (fn [[k v]] [k (join-regions v)]))
-       (into {})))
-
-regions
+  (->> regions-by-plant
+       (map (fn [[k v]] v))
+       (pmap create-regions)
+       (apply concat)))
 
 (defn calc-area [region] (count region))
 (defn calc-perimeter [region]
@@ -99,9 +83,6 @@ regions
                       (count)))))
        (reduce +)))
 
-; (time
-;   (->> regions
-;        (seq)
-;        (mapcat second)
-;        (map #(* (calc-area %) (calc-perimeter %)))
-;        (reduce +)))
+(->> regions
+     (map #(* (calc-area %) (calc-perimeter %)))
+     (reduce +))
