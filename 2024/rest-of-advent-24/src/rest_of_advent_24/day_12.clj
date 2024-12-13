@@ -18,6 +18,16 @@
        (apply concat)
        (vec)))
 
+(def row-major-indices
+  (->> indices
+       (group-by first)
+       (map second)))
+
+(def col-major-indices
+  (->> indices
+       (group-by second)
+       (map second)))
+
 (def regions-by-plant
   (->> indices
        (group-by get-plant)))
@@ -55,34 +65,74 @@
          region #{}
          regions []]
     (if (empty? input) (if (> (count region) 0) (conj regions region) regions)
-        (let [adjacent-indices (->> input (filter (fn [c] (->> region (some #(is-adjacent? c %))))))]
+        (let [adjacent-indices (->> input (filter (fn [c] (->> region (some #(is-adjacent? c %)))))
+                                          (set))]
           (if (empty? adjacent-indices)
             (recur (rest input)             ;; consume one
                    #{(first input)}         ;; start new region
                    (if (> (count region) 0) ;; put region aside
                      (conj regions region)
                      regions))
-            (recur (->> input (remove (set adjacent-indices))) ;; consume all adjacent
-                   (into region adjacent-indices)              ;; put in adjacent region
+            (recur (->> input (remove adjacent-indices)) ;; consume all adjacent
+                   (into region adjacent-indices)        ;; put in adjacent region
                    regions))))))
 
 (def regions
-  (->> regions-by-plant
-       (map (fn [[k v]] v))
-       (pmap create-regions)
-       (apply concat)))
+  (time
+    (->> regions-by-plant
+         (map (fn [[k v]] v))
+         (pmap create-regions)
+         (apply concat))))
 
-(defn calc-area [region] (count region))
-(defn calc-perimeter [region]
-  (->> region
-       (map (fn [c]
-              (- 4
-                 (->> directions
-                      (map (partial add c))
-                      (keep (fn [potential] (region potential)))
-                      (count)))))
+(nth regions 2)
+regions
+
+(def region-id-by-index
+  (->> regions
+       (map-indexed (fn [id region] (->> region (map (fn [idx] [idx id])))))
+       (apply concat)
+       (into {})))
+
+(def fences-by-region-id
+  (->> region-id-by-index
+       (map second)
+       (map (fn [id] [id 0]))
+       (into {})
+       (atom)))
+
+(defn calc-area [region-id] (count (nth regions region-id)))
+(defn calc-perimeter []
+  (doseq [row row-major-indices]
+    (doseq [coord row]
+      (let [current-region-id (region-id-by-index coord)
+            current-plant     (get-plant coord)
+            plant-above       (get-plant (add coord [-1 0]))
+            plant-below       (get-plant (add coord [1 0]))
+            is-fence-above?   (not= current-plant plant-above)
+            is-fence-below?   (not= current-plant plant-below)]
+
+        (when is-fence-above?
+          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+        (when is-fence-below?
+          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc)))))))
+
+  (doseq [col col-major-indices]
+    (doseq [coord col]
+      (let [current-region-id (region-id-by-index coord)
+            current-plant     (get-plant coord)
+            plant-left        (get-plant (add coord [0 -1]))
+            plant-right       (get-plant (add coord [0 1]))
+            is-fence-left?    (not= current-plant plant-left)
+            is-fence-right?   (not= current-plant plant-right)]
+
+        (when is-fence-left?
+          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))
+        (when is-fence-right?
+          (swap! fences-by-region-id (fn [a] (update-in a [current-region-id] inc))))))))
+
+(calc-perimeter)
+
+(time
+  (->> @fences-by-region-id
+       (map (fn [[region-id fences-n]] (* fences-n (calc-area region-id))))
        (reduce +)))
-
-(->> regions
-     (map #(* (calc-area %) (calc-perimeter %)))
-     (reduce +))
