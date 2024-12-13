@@ -5,4 +5,9 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [net.clojars.john/injest "0.1.0-beta.8"]]
-  :repl-options {:init-ns rest-of-advent-24.core})
+  :plugins [[cider/cider-nrepl "0.29.0"]]
+  :profiles {:kaocha {:dependencies [[lambdaisland/kaocha "1.91.1392"]]}}
+  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]
+            "test-runner" ["with-profile" "+dev" "run" "-m" "kaocha.runner"]}
+  :repl-options {:init-ns rest-of-advent-24.core}
+  :test-paths ["test"])

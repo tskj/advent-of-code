@@ -1,7 +1,7 @@
 (ns rest-of-advent-24.day-12
   (:require
-   [clojure.string :refer [join split split-lines]]
-   [rest-of-advent-24.utils.macros :refer [blk]]))
+   [clojure.string :refer [split-lines]]
+   [clojure.test :refer [deftest is testing]]))
 
 (def input
   (->> (slurp "resources/day-12-input.txt")

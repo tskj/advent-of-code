@@ -1,0 +1,2 @@
+{:conjure
+ {:test {:runner "lein" :args ["kaocha"]}}}
