@@ -5,4 +5,4 @@
 
 (deftest lol
   (testing "calcs"
-    (is (= 1 (calc-area 1)))))
+    (is (= 7 (calc-area 1)))))
