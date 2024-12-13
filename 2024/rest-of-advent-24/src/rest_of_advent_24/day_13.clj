@@ -65,7 +65,7 @@
     (const [digits s] (parse-n-digit-int s))
     (const-try p-y    (parse-long digits))
 
-    [{:ax a-x :bx b-x :ay a-y :by b-y :px p-x :py p-y} s]))
+    [{:ax a-x :bx b-x :ay a-y :by b-y :px (+ p-x 10000000000000) :py (+ p-y 10000000000000)} s]))
 
 (def all-case-equations
   (->> input
