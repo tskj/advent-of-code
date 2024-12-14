@@ -118,26 +118,74 @@
 
 (def n (atom 0))
 
-(defn print-robots [w h positions]
-  (blk
-    ; (const output (StringBuilder.))
-    (doseq [y (range h)]
-      (doseq [x (range w)]
-        (let [number-here (transduce (keep (fn [r] (when (= r [x y]) 1))) + 0 positions)]
-          (if (= number-here 0))))
-            ; (.append output "   ")
-            ; (.append output (str number-here)))))
-      (.append output "\n"))
-    (.write *out* "\033[H\033[2J")
-    (.write *out* (str "number of steps: " @n "\n"))
-    (.write *out* (.toString output))
-    (.flush *out*)))
+(def current-board (atom []))
+
+(defn print-robots [w h ps]
+    (let [v (atom (transient (vec (repeat (* w h) 0))))]
+      (doseq [[x y] ps]
+        (let [idx (+ (* y w) x)
+              _v @v
+              prev (nth _v idx)]
+           (reset! v (assoc! _v idx (inc prev)))))
+      (blk
+          (const output (StringBuilder.))
+          (const line-length (atom 0))
+          (const stored (persistent! @v))
+          (const symmtery? (let [s (atom true)]
+                              (doseq [y (range h)]
+                                 (doseq [x (range w)]
+                                   (let [idx1 (+ (* y w) x)
+                                         y'   y
+                                         x'   (+ (/ (dec w) 2) (* -1 (- x (/ (dec w) 2))))
+                                         idx2 (+ (* y' w) x')]
+                                    (assert (< x' w))
+                                    (assert (>= x' 0))
+                                    (when (and (> 10 (abs (- x' x)))
+                                               (> y 30)
+                                               (< y 60)) 
+                                      (when (not= (get stored idx1) (get stored idx2))
+                                        (reset! s false))))))
+                            @s))
+
+          (const streak? (let [found (atom false)] 
+                           (doseq [y (range h)]
+                              (doseq [x (range w)]
+                                (let [s (atom true)]
+                                  (doseq [h (range 7)] 
+                                    (when (= 0 (or (get stored (+ (* (+ y h) w) x)) 0))
+                                       (reset! s false))) 
+                                  (when @s 
+                                    (reset! found true))))) 
+                          @found)) 
+                                     
+          (reset! current-board stored)
+          (doseq [s stored]
+            (when (= @line-length 0)
+              (.append output "\n"))
+            (swap! line-length (comp #(mod % w) inc))
+            (if (= s 0)
+              (.append output "  ")
+              (.append output (str " " s))))
+          (.write *out* "\033[H\033[2J")
+          (.write *out* (str "number of steps: " @n "\n"))
+          (.write *out* (.toString output))
+          (.write *out* "\n")
+          (when symmtery?
+            (.write *out* (str "\nSYMMETRY SYMMETERY SYMMETYER TREER TREEE RTREEE n: " @n "\n"))
+            (.flush *out*)
+            (assert false))
+          (when streak?
+            (.write *out* (str "\nSTREK STREK STREK STREK STREK n: " @n "\n"))
+            (.flush *out*)
+            (assert false))
+          (.flush *out*))))
+
 
 (def start (parse-file input))
 
 (def positions (atom (:data start)))
 
-(defn run []
+(defn run' []
   (blk
     (const {[width height] :dimensions} start)
 
@@ -147,12 +195,26 @@
 
     (print-robots width height (map first final-positions))))
 
-(def wait (atom 10))
+(def wait (atom 10000))
+
+(defn empty-square? []
+  (blk
+    (const is-empty? (atom true))
+    (doseq [y (range 1)]
+      (doseq [x (range 1)]
+        (when (< 0 (get @current-board (+ (* 101 y) x)))
+            (reset! is-empty? false))))
+    @is-empty?))
+
+(defn run []
+  (while true
+    (run')))
 
 (defn run-loop []
   (future
     (try
       (while true
-        (run))
+        (run)
+        (Thread/sleep @wait))
       (catch InterruptedException e
         (println "Loop interrupted")))))
