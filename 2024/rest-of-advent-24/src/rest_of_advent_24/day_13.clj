@@ -1,6 +1,7 @@
 (ns rest-of-advent-24.day-13
   (:require
    [clojure.string :refer [split-lines] :as s]
+   [clojure.test :refer [deftest is testing]]
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (defn create-cases [input]
@@ -15,10 +16,14 @@
 
 (defn parse-literal [literal s]
   (blk
-    (const-try does-it? (s/starts-with? s literal))
+    (const-try does-it? (or (s/starts-with? s literal) nil))
     (const rest-of-s (subs s (count literal)))
     (assert (= s (str literal rest-of-s)))
     [literal rest-of-s]))
+
+(deftest my-test-thingy
+  (is (= ["test" "hei"] (parse-literal "test" "testhei")))
+  (is (= nil (parse-literal "test" "tesXhei"))))
 
 (defn is-digit? [d]
   (Character/isDigit d))
