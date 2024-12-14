@@ -68,7 +68,7 @@
     (const-try [_ s]    (parse-literal "p=" s))
     (const     [spx s]  (parse-sign s))
     (const-try [px s]   (parse-n-digit-int s))
-    (const-try [_ s]    (parse-n-digit-int "," s))
+    (const-try [_ s]    (parse-literal "," s))
     (const     [spy s]  (parse-sign s))
     (const-try [py s]   (parse-n-digit-int s))
 
@@ -109,39 +109,50 @@
 
 (defn simulate [width height]
   (fn [[pos vel]]
-    (loop [iterations 100
+    (loop [iterations 1
            current-pos pos]
       (if (<= iterations 0)
-        current-pos
+        [current-pos vel]
         (recur (dec iterations)
                (step [width height] current-pos vel))))))
 
-(blk
-  (const {[width height] :dimensions
-          robots :data} (parse-file input))
+(def n (atom 0))
 
-  (println width height robots)
+(defn print-robots [w h positions]
+  (blk
+    ; (const output (StringBuilder.))
+    (doseq [y (range h)]
+      (doseq [x (range w)]
+        (let [number-here (transduce (keep (fn [r] (when (= r [x y]) 1))) + 0 positions)]
+          (if (= number-here 0))))
+            ; (.append output "   ")
+            ; (.append output (str number-here)))))
+      (.append output "\n"))
+    (.write *out* "\033[H\033[2J")
+    (.write *out* (str "number of steps: " @n "\n"))
+    (.write *out* (.toString output))
+    (.flush *out*)))
 
-  (const final-positions (map (simulate width height) robots))
+(def start (parse-file input))
 
-  (const middle-x (/ (dec width) 2))
-  (const middle-y (/ (dec height) 2))
+(def positions (atom (:data start)))
 
-  (const robots-removed (->> final-positions
-                             (remove (fn [[x y]] (= x middle-x)))
-                             (remove (fn [[x y]] (= y middle-y)))))
+(defn run []
+  (blk
+    (const {[width height] :dimensions} start)
 
-  (const q1 (->> robots-removed
-                (filter (fn [[x y]] (and (< x middle-x)
-                                         (< y middle-y))))))
-  (const q2 (->> robots-removed
-                (filter (fn [[x y]] (and (> x middle-x)
-                                         (< y middle-y))))))
-  (const q3 (->> robots-removed
-                (filter (fn [[x y]] (and (> x middle-x)
-                                         (> y middle-y))))))
-  (const q4 (->> robots-removed
-                (filter (fn [[x y]] (and (< x middle-x)
-                                         (> y middle-y))))))
+    (const final-positions (map (simulate width height) @positions))
+    (swap! n inc)
+    (reset! positions final-positions)
 
-  (* (count q1) (count q2) (count q3) (count q4)))
+    (print-robots width height (map first final-positions))))
+
+(def wait (atom 10))
+
+(defn run-loop []
+  (future
+    (try
+      (while true
+        (run))
+      (catch InterruptedException e
+        (println "Loop interrupted")))))
