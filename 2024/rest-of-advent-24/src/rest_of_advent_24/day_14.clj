@@ -142,22 +142,22 @@
                                     (assert (>= x' 0))
                                     (when (and (> 10 (abs (- x' x)))
                                                (> y 30)
-                                               (< y 60)) 
+                                               (< y 60))
                                       (when (not= (get stored idx1) (get stored idx2))
                                         (reset! s false))))))
                             @s))
 
-          (const streak? (let [found (atom false)] 
+          (const streak? (let [found (atom false)]
                            (doseq [y (range h)]
                               (doseq [x (range w)]
                                 (let [s (atom true)]
-                                  (doseq [h (range 7)] 
+                                  (doseq [h (range 7)]
                                     (when (= 0 (or (get stored (+ (* (+ y h) w) x)) 0))
-                                       (reset! s false))) 
-                                  (when @s 
-                                    (reset! found true))))) 
-                          @found)) 
-                                     
+                                       (reset! s false)))
+                                  (when @s
+                                    (reset! found true)))))
+                          @found))
+
           (reset! current-board stored)
           (doseq [s stored]
             (when (= @line-length 0)
@@ -195,7 +195,7 @@
 
     (print-robots width height (map first final-positions))))
 
-(def wait (atom 10000))
+(def wait (atom 10))
 
 (defn empty-square? []
   (blk
@@ -206,15 +206,11 @@
             (reset! is-empty? false))))
     @is-empty?))
 
-(defn run []
-  (while true
-    (run')))
-
 (defn run-loop []
   (future
     (try
       (while true
-        (run)
+        (run')
         (Thread/sleep @wait))
       (catch InterruptedException e
         (println "Loop interrupted")))))
