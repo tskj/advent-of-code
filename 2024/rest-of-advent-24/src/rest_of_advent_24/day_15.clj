@@ -133,6 +133,7 @@
                          (assert (not (empty? box-coords)))
                          (recur (concat end-coords (map #(add % d) box-coords))))
                        new-ps)))))
+
       (if (some #(is-wall? m %) end-coords) (return m))
       (assert (every? #(is-empty? m %) end-coords))
       (assert (every? #(is-box? m %) @flat-box-coords))
@@ -142,22 +143,26 @@
         (assert (is-box? m p1))
         (assert (is-box? m p2)))
 
-      (const map-without-boxes (->> unique-box-structure
-                                    (reduce (fn [m* [p1 p2]]
-                                              (-> m*
-                                                  (assoc-in p1 \.)
-                                                  (assoc-in p2 \.)))
-                                            m)))
-      (const new-box-positions (->> unique-box-structure
-                                    (map (fn [[p1 p2]] [(add p1 d)
-                                                        (add p2 d)]))))
+      (const map-without-boxes
+             (->> unique-box-structure
+                  (reduce (fn [m* [p1 p2]]
+                            (-> m*
+                                (assoc-in p1 \.)
+                                (assoc-in p2 \.)))
+                          m)))
 
-      (const map-with-new-box-positions (->> new-box-positions
-                                             (reduce (fn [m* [p1 p2]]
-                                                       (-> m*
-                                                           (assoc-in p1 \[)
-                                                           (assoc-in p2 \])))
-                                                     map-without-boxes)))
+      (const new-box-positions
+             (->> unique-box-structure
+                  (map (fn [[p1 p2]] [(add p1 d)
+                                      (add p2 d)]))))
+
+      (const map-with-new-box-positions
+             (->> new-box-positions
+                  (reduce (fn [m* [p1 p2]]
+                            (-> m*
+                                (assoc-in p1 \[)
+                                (assoc-in p2 \])))
+                          map-without-boxes)))
 
       (const final-map (swp map-with-new-box-positions r potential))
       final-map)))
