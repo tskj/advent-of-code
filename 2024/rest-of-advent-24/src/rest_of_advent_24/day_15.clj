@@ -104,7 +104,7 @@
               (recur (swp m' c to-swap)
                      to-swap)))))))
 
-(def final-warehous
+(def final-warehouse
   (->> robot-movements
        (reduce step warehouse)))
 
@@ -115,8 +115,8 @@
 (let [box-coords (atom #{})]
   (doseq [y (range height)]
     (doseq [x (range width)]
-      (when (is-box? final-warehous [y x])
+      (when (is-box? final-warehouse [y x])
         (swap! box-coords conj [y x]))))
-  (->> @box-coords 
+  (->> @box-coords
        (map gps-of-coord)
-       (reduce +))) 
+       (reduce +)))
