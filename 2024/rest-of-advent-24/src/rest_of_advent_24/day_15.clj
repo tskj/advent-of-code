@@ -4,13 +4,22 @@
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def input
-  (->> (slurp "resources/day-15-input.txt")
+  (->> (slurp "resources/test/day-15-input.txt")
        (#(split % #"\n\n"))))
 
 (def warehouse
   (let [[m _] input]
     (->> m
          (split-lines)
+         (map (fn [line] 
+                (->> line 
+                     (mapcat 
+                       (fn [tile] 
+                         (case tile
+                          \# [\# \#]
+                          \O [\[ \]]
+                          \. [\. \.]
+                          \@ [\@ \.]))))))
          (mapv vec))))
 
 (def width (count (first warehouse)))
