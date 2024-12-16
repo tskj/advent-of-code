@@ -84,21 +84,21 @@
 (defn turn-reindeer-right [reindeer]
   (-> reindeer
       (update :dir turn-right)
-      (update :score increase-score-by-turning)
-      (update :path conj :clockwise)))
+      (update :score increase-score-by-turning)))
+      ; (update :path conj :clockwise)))
 
 (defn turn-reindeer-left [reindeer]
   (-> reindeer
       (update :dir turn-left)
-      (update :score increase-score-by-turning)
-      (update :path conj :anti-clockwise)))
+      (update :score increase-score-by-turning)))
+      ; (update :path conj :anti-clockwise)))
 
 (defn turn-reindeer-around [reindeer]
   (-> reindeer
       (update :dir rev-dir)
       (update :score increase-score-by-turning)
-      (update :score increase-score-by-turning)
-      (update :path conj :turn-around)))
+      (update :score increase-score-by-turning)))
+      ; (update :path conj :turn-around)))
 
 (defn advance-reindeer [reindeer]
   (assert (is-empty? (:pos reindeer)))
@@ -176,6 +176,8 @@
   (f x)
   x)
 
+(def visited-tiles (atom #{start-coord end-coord}))
+
 (loop [reindeers (mapcat branch-reindeers [{:pos start-coord :dir :right :score 0 :path []}])]
   (let [next-reindeers (->> (map walk-until-decision-point reindeers)
                             (mapcat branch-reindeers)
@@ -190,7 +192,16 @@
                             (vec))]
     (if (every? is-end? (map :pos next-reindeers))
       (do
-        (println next-reindeers)
-        (->> (map :score next-reindeers)
-             (apply min)))
+        (let [best-score (->> (map :score next-reindeers)
+                              (apply min))
+              best-reindeer (->> next-reindeers (filter #(= (:score %) best-score)))
+              best-paths (map :path best-reindeer)]
+          (doseq [path (vec best-paths)]
+            (->> path (vec) (reduce (fn [c dir] (let [c* (add c dir)]
+                                                  (swap! visited-tiles conj c*)
+                                                  c*))
+                                    start-coord)))
+          best-score))
       (recur next-reindeers))))
+
+(count @visited-tiles)
