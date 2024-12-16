@@ -4,7 +4,7 @@
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def input
-  (->> (slurp "resources/test/day-16-input.txt")
+  (->> (slurp "resources/day-16-input.txt")
        (split-lines)))
 
 (def width (count (first input)))
@@ -84,25 +84,29 @@
 (defn turn-reindeer-right [reindeer]
   (-> reindeer
       (update :dir turn-right)
-      (update :score increase-score-by-turning)))
+      (update :score increase-score-by-turning)
+      (update :path conj :clockwise)))
 
 (defn turn-reindeer-left [reindeer]
   (-> reindeer
       (update :dir turn-left)
-      (update :score increase-score-by-turning)))
+      (update :score increase-score-by-turning)
+      (update :path conj :anti-clockwise)))
 
 (defn turn-reindeer-around [reindeer]
   (-> reindeer
       (update :dir rev-dir)
       (update :score increase-score-by-turning)
-      (update :score increase-score-by-turning)))
+      (update :score increase-score-by-turning)
+      (update :path conj :turn-around)))
 
 (defn advance-reindeer [reindeer]
   (assert (is-empty? (:pos reindeer)))
   (assert (is-empty? (add (:pos reindeer) (:dir reindeer))))
   (-> reindeer
       (update :pos #(add % (:dir reindeer)))
-      (update :score inc)))
+      (update :score inc)
+      (update :path conj (:dir reindeer))))
 
 (defn reindeer-stanger-i-veggen? [reindeer]
   (is-wall? (add (:pos reindeer) (:dir reindeer))))
@@ -172,7 +176,7 @@
   (f x)
   x)
 
-(loop [reindeers [{:pos start-coord :dir :right :score 0}]]
+(loop [reindeers (mapcat branch-reindeers [{:pos start-coord :dir :right :score 0 :path []}])]
   (let [next-reindeers (->> (map walk-until-decision-point reindeers)
                             (mapcat branch-reindeers)
                             (remove (fn [r] (let [k (reindeer-key r)
@@ -185,6 +189,8 @@
                                                   false)))))
                             (vec))]
     (if (every? is-end? (map :pos next-reindeers))
-      (->> (map :score next-reindeers)
-           (apply min))
+      (do
+        (println next-reindeers)
+        (->> (map :score next-reindeers)
+             (apply min)))
       (recur next-reindeers))))
