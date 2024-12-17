@@ -5,7 +5,7 @@
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def input-program
-  (->> (slurp "resources/day-17-input.txt")))
+  (->> (slurp "resources/test/day-17-input.txt")))
 
 (defn parse-literal [literal s]
   (blk
@@ -159,14 +159,20 @@
 (def number-of-cache-misses (atom 0))
 
 (defn run-computer [computer]
-  (let [past-states (atom #{(:cpu computer)})]
+  (let [past-states (atom {(:cpu computer) computer})]
     (loop [c computer]
       (if-let [c* (@previous-state (:cpu c))]
-        (do
-          (let [c** (-> c* (assoc :output (concat (:output c) (:output c*))))]
-            (swap! previous-state assoc (:cpu computer) c**)
-            (swap! number-of-cache-hits inc)
-            c**))
+        (let [c** (-> c* (assoc :output (vec (concat (:output c) (:output c*)))))]
+          ; (doseq [[k v] @past-states]
+          ;    (let [old-output (vec (:output v))
+          ;          new-output (vec (:output c**))
+          ;          actual-output (vec (drop (count old-output) new-output))]
+          ;      (assert (= old-output (subvec new-output 0 (count old-output))))
+          ;      (swap! previous-state assoc k (assoc v :output actual-output))))
+
+          (swap! previous-state assoc (:cpu computer) c**)
+          (swap! number-of-cache-hits inc)
+          c**)
 
         (let [nc (step c)]
           (if (@past-states (:cpu nc))
@@ -174,12 +180,18 @@
               (assert false "loop detetcted sadge")
               computer)
             (do
-              (swap! past-states conj (:cpu nc))
+              (swap! past-states assoc (:cpu nc) nc)
               (if (has-halted? nc)
                 (do
                   ; (->> (vec @past-states)
                   ;      (mapv (fn [k] [k nc]))
                   ;      (into {})
+                       ; (doseq [[k v] @past-states]
+                       ;    (let [old-output (vec (:output v))
+                       ;          new-output (vec (:output nc))
+                       ;          actual-output (vec (drop (count old-output) new-output))]
+                       ;      (assert (= old-output (subvec new-output 0 (count old-output))))
+                       ;      (swap! previous-state assoc k (assoc v :output actual-output))))
                        (swap! previous-state assoc (:cpu computer) nc)
                        (swap! number-of-cache-misses inc)
                   nc)
@@ -197,7 +209,9 @@
                 (let [end-computer (run-computer (assoc-in corrupted-computer [:cpu :a] candidate-a))]
                   (if (= (:output end-computer)
                          (:memory corrupted-computer))
-                      end-computer
+                      (do
+                        (println "result is " candidate-a)
+                        end-computer)
                       (recur (inc candidate-a))))))
 computer
 
@@ -209,19 +223,19 @@ computer
 
 
 (deftest test-cases-from-part-1
-  (is (= 1 (:b (:cpu (run-computer {:cpu {:a 0 :b 0 :c 9 :instruction-pointer 0}
-                                    :memory [2 6]
-                                    :output []})))))
-  (is (= [0 1 2] (:output (run-computer {:cpu {:a 10 :b 0 :c 0 :instruction-pointer 0}
-                                         :memory [5 0 5 1 5 4]
-                                         :output []}))))
-  (is (= [4 2 5 6 7 7 7 7 3 1 0] (:output (run-computer {:cpu {:a 2024 :b 0 :c 0 :instruction-pointer 0}
-                                                         :memory [0 1 5 4 3 0]
-                                                         :output []}))))
-  (is (= 26 (:b (:cpu (run-computer {:cpu {:a 0 :b 29 :c 0 :instruction-pointer 0}
-                                     :memory [1 7]
-                                     :output []})))))
-  (is (= 44354 (:b (:cpu (run-computer {:cpu {:a 0 :b 2024 :c 43690 :instruction-pointer 0}
-                                        :memory [4 0]
-                                        :output []}))))))
+  (is (= 1 (:b (:cpu (do (reset! previous-state {}) (run-computer {:cpu {:a 0 :b 0 :c 9 :instruction-pointer 0}
+                                                                   :memory [2 6]
+                                                                   :output []}))))))
+  (is (= [0 1 2] (:output (do (reset! previous-state {}) (run-computer {:cpu {:a 10 :b 0 :c 0 :instruction-pointer 0}
+                                                                        :memory [5 0 5 1 5 4]
+                                                                        :output []})))))
+  (is (= [4 2 5 6 7 7 7 7 3 1 0] (:output (do (reset! previous-state {}) (run-computer {:cpu {:a 2024 :b 0 :c 0 :instruction-pointer 0}
+                                                                                        :memory [0 1 5 4 3 0]
+                                                                                        :output []})))))
+  (is (= 26 (:b (:cpu (do (reset! previous-state {}) (run-computer {:cpu {:a 0 :b 29 :c 0 :instruction-pointer 0}
+                                                                    :memory [1 7]
+                                                                    :output []}))))))
+  (is (= 44354 (:b (:cpu (do (reset! previous-state {}) (run-computer {:cpu {:a 0 :b 2024 :c 43690 :instruction-pointer 0}
+                                                                       :memory [4 0]
+                                                                       :output []})))))))
   ; (is (= [4 6 3 5 6 3 5 2 1 0] (:output (run-computer (parse-program (slurp "resources/test/day-17-input.txt")))))))
