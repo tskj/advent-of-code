@@ -5,7 +5,7 @@
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def input-program
-  (->> (slurp "resources/test/day-17-input.txt")))
+  (->> (slurp "resources/day-17-input.txt")))
 
 (defn parse-literal [literal s]
   (blk
@@ -155,26 +155,33 @@
     (>= p (dec (count m)))))
 
 (def previous-state (atom {}))
+(def number-of-cache-hits (atom 0))
+(def number-of-cache-misses (atom 0))
 
 (defn run-computer [computer]
   (let [past-states (atom #{(:cpu computer)})]
     (loop [c computer]
-      (let [nc (step c)]
-        (if (@past-states (:cpu nc))
-          (do
-            (println "looop detected!" nc)
-            (assert false "loop detetcted sadge")
-            computer)
-          (if-let [c* (@previous-state (:cpu nc))]
-            c*
+      (if-let [c* (@previous-state (:cpu c))]
+        (do
+          (let [c** (-> c* (assoc :output (concat (:output c) (:output c*))))]
+            (swap! previous-state assoc (:cpu computer) c**)
+            (swap! number-of-cache-hits inc)
+            c**))
+
+        (let [nc (step c)]
+          (if (@past-states (:cpu nc))
+            (do
+              (assert false "loop detetcted sadge")
+              computer)
             (do
               (swap! past-states conj (:cpu nc))
               (if (has-halted? nc)
                 (do
-                  (->> (vec @past-states)
-                       (mapv (fn [k] [k nc]))
-                       (into {})
-                       (swap! previous-state into))
+                  ; (->> (vec @past-states)
+                  ;      (mapv (fn [k] [k nc]))
+                  ;      (into {})
+                       (swap! previous-state assoc (:cpu computer) nc)
+                       (swap! number-of-cache-misses inc)
                   nc)
                 (recur nc)))))))))
 
@@ -182,11 +189,11 @@
 
 (def computer (loop [candidate-a 0]
                 (when (= (mod candidate-a 100000) 0)
-                  (println "jobber på kandidat" candidate-a)
-                  (println "lengde på cache" (count @previous-state)))
-                  ; (println (map (fn [[k v]] k) @previous-state)))
-                (when (= (mod candidate-a 1000000) 0)
-                  (println "selve cachen" @previous-state))
+                  (println "jobber på kandidat " candidate-a)
+                  (println "lengde på cache    " (count @previous-state))
+                  (println "antall cache hits  " @number-of-cache-hits)
+                  (println "antall cache misses" @number-of-cache-misses)
+                  (println "totalt:            " (+ @number-of-cache-hits @number-of-cache-misses)))
                 (let [end-computer (run-computer (assoc-in corrupted-computer [:cpu :a] candidate-a))]
                   (if (= (:output end-computer)
                          (:memory corrupted-computer))
