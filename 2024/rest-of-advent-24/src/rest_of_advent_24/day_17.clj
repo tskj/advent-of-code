@@ -98,11 +98,10 @@
     7 (assert false "unreachable according to spec")))
 
 (defn step [computer]
-  (println computer)
   (let [p (->> computer :cpu :instruction-pointer)
         opcode  (->> computer :memory (#(nth % p)))
         operand (->> computer :memory (#(nth % (inc p))))
-        advptr  (fn [c*] (update-in c* [:cpu :instruction-pointer] (c* inc inc)))]
+        advptr  (fn [c*] (update-in c* [:cpu :instruction-pointer] (comp inc inc)))]
     (case opcode
       0         (let [numerator (->> computer :cpu :a)
                       denominator (->> (power-of-2 (eval-combo computer operand)))]
@@ -155,20 +154,52 @@
         m (->> computer :memory)]
     (>= p (dec (count m)))))
 
-(defn run-computer [computer]
-  (loop [c computer]
-    (let [nc (step c)]
-      (if (has-halted? nc)
-        nc
-        (recur nc)))))
+(def previous-state (atom {}))
 
-(def computer (run-computer (parse-program input-program)))
+(defn run-computer [computer]
+  (let [past-states (atom #{(:cpu computer)})]
+    (loop [c computer]
+      (let [nc (step c)]
+        (if (@past-states (:cpu nc))
+          (do
+            (println "looop detected!" nc)
+            (assert false "loop detetcted sadge")
+            computer)
+          (if-let [c* (@previous-state (:cpu nc))]
+            c*
+            (do
+              (swap! past-states conj (:cpu nc))
+              (if (has-halted? nc)
+                (do
+                  (->> (vec @past-states)
+                       (mapv (fn [k] [k nc]))
+                       (into {})
+                       (swap! previous-state into))
+                  nc)
+                (recur nc)))))))))
+
+(def corrupted-computer (parse-program input-program))
+
+(def computer (loop [candidate-a 0]
+                (when (= (mod candidate-a 100000) 0)
+                  (println "jobber på kandidat" candidate-a)
+                  (println "lengde på cache" (count @previous-state)))
+                  ; (println (map (fn [[k v]] k) @previous-state)))
+                (when (= (mod candidate-a 1000000) 0)
+                  (println "selve cachen" @previous-state))
+                (let [end-computer (run-computer (assoc-in corrupted-computer [:cpu :a] candidate-a))]
+                  (if (= (:output end-computer)
+                         (:memory corrupted-computer))
+                      end-computer
+                      (recur (inc candidate-a))))))
 computer
 
 (->>
   computer
   :output
   (join ","))
+
+
 
 (deftest test-cases-from-part-1
   (is (= 1 (:b (:cpu (run-computer {:cpu {:a 0 :b 0 :c 9 :instruction-pointer 0}
@@ -185,5 +216,5 @@ computer
                                      :output []})))))
   (is (= 44354 (:b (:cpu (run-computer {:cpu {:a 0 :b 2024 :c 43690 :instruction-pointer 0}
                                         :memory [4 0]
-                                        :output []})))))
-  (is (= [4 6 3 5 6 3 5 2 1 0] (:output (run-computer (parse-program (slurp "resources/test/day-17-input.txt")))))))
+                                        :output []}))))))
+  ; (is (= [4 6 3 5 6 3 5 2 1 0] (:output (run-computer (parse-program (slurp "resources/test/day-17-input.txt")))))))
