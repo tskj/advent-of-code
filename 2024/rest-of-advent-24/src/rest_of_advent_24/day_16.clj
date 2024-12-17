@@ -4,7 +4,7 @@
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def input
-  (->> (slurp "resources/day-16-input.txt")
+  (->> (slurp "resources/test/day-16-input.txt")
        (split-lines)))
 
 (def width (count (first input)))
