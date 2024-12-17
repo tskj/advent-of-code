@@ -154,23 +154,38 @@
         m (->> computer :memory)]
     (>= p (dec (count m)))))
 
+(def lru-capacity 100000)
+(def recently-used (atom []))
 (def previous-state (atom {}))
+
+(defn read-lru [k]
+  (swap! recently-used conj k)
+  (when (> (count @recently-used) lru-capacity)
+    (swap! recently-used rest))
+  (@previous-state k))
+
+(defn write-lru [k v]
+  (when (> (count @previous-state) lru-capacity)
+    (swap! previous-state select-keys @recently-used))
+  (swap! previous-state assoc k v)
+  nil)
+
 (def number-of-cache-hits (atom 0))
 (def number-of-cache-misses (atom 0))
 
 (defn run-computer [computer]
   (let [past-states (atom {(:cpu computer) computer})]
     (loop [c computer]
-      (if-let [c* (@previous-state (:cpu c))]
+      (if-let [c* (read-lru (:cpu c))]
         (let [c** (-> c* (assoc :output (vec (concat (:output c) (:output c*)))))]
-          ; (doseq [[k v] @past-states]
-          ;    (let [old-output (vec (:output v))
-          ;          new-output (vec (:output c**))
-          ;          actual-output (vec (drop (count old-output) new-output))]
-          ;      (assert (= old-output (subvec new-output 0 (count old-output))))
-          ;      (swap! previous-state assoc k (assoc v :output actual-output))))
+          (doseq [[k v] @past-states]
+             (let [old-output (vec (:output v))
+                   new-output (vec (:output c**))
+                   actual-output (vec (drop (count old-output) new-output))]
+               (assert (= old-output (subvec new-output 0 (count old-output))))
+               (write-lru k (assoc v :output actual-output))))
 
-          (swap! previous-state assoc (:cpu computer) c**)
+          (write-lru (:cpu computer) c**)
           (swap! number-of-cache-hits inc)
           c**)
 
@@ -186,13 +201,13 @@
                   ; (->> (vec @past-states)
                   ;      (mapv (fn [k] [k nc]))
                   ;      (into {})
-                       ; (doseq [[k v] @past-states]
-                       ;    (let [old-output (vec (:output v))
-                       ;          new-output (vec (:output nc))
-                       ;          actual-output (vec (drop (count old-output) new-output))]
-                       ;      (assert (= old-output (subvec new-output 0 (count old-output))))
-                       ;      (swap! previous-state assoc k (assoc v :output actual-output))))
-                       (swap! previous-state assoc (:cpu computer) nc)
+                       (doseq [[k v] @past-states]
+                          (let [old-output (vec (:output v))
+                                new-output (vec (:output nc))
+                                actual-output (vec (drop (count old-output) new-output))]
+                            (assert (= old-output (subvec new-output 0 (count old-output))))
+                            (write-lru k (assoc v :output actual-output))))
+                       (write-lru (:cpu computer) nc)
                        (swap! number-of-cache-misses inc)
                   nc)
                 (recur nc)))))))))
@@ -203,6 +218,7 @@
                 (when (= (mod candidate-a 100000) 0)
                   (println "jobber på kandidat " candidate-a)
                   (println "lengde på cache    " (count @previous-state))
+                  (println "lru queue size     " (count @recently-used) (count (set @recently-used)))
                   (println "antall cache hits  " @number-of-cache-hits)
                   (println "antall cache misses" @number-of-cache-misses)
                   (println "totalt:            " (+ @number-of-cache-hits @number-of-cache-misses)))
