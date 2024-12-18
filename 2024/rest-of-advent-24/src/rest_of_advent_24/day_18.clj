@@ -3,7 +3,7 @@
    [clojure.string :refer [join split split-lines]]))
 
 (def file
-  (->> (slurp "resources/test/day-18-input.txt")
+  (->> (slurp "resources/day-18-input.txt")
        (split-lines)))
 
 (def number-of-bytes-to-simulate
@@ -25,7 +25,13 @@
        (mapv #(split % #","))
        (mapv #(mapv parse-long %))))
 
-(def walls incoming-bytes)
+(def walls (set incoming-bytes))
+
+(defn is-out-of-bounds? [[x y]]
+  (or (< x 0)
+      (< y 0)
+      (>= x width)
+      (>= y height)))
 
 (def empty-map
   (-> (vec (repeat height (vec (repeat width \.))))))
@@ -36,13 +42,15 @@
        (reduce (fn [map' thing] (assoc-in map' thing pencil)) mmm)))
 
 (defn draw [map*]
-  (println (join "\n" (mapv join map*))))
+  (println (str "\033[2J\033[H" (join "\n" (mapv #(join " " %) map*)))))
+
 
 (defn h [n]
-  (let [[x y] n
-        [x* y*] target]
-    (+ (- x* x)
-       (- y* y))))
+  0)
+  ; (let [[x y] n
+  ;       [x* y*] target]
+  ;   (+ (- x* x)
+  ;      (- y* y))))
 
 (defn advance-sloth-up [sloth]
   (-> sloth
@@ -71,7 +79,8 @@
 (defn n-for-sloth [sloth]
   (->>
     [advance-sloth-up advance-sloth-right advance-sloth-down advance-sloth-left]
-    (mapv (fn [f] (f sloth)))))
+    (mapv (fn [f] (f sloth)))
+    (remove (fn [sloth] (is-out-of-bounds? (:p sloth))))))
 
 (defn f [sloth]
   (+ (:g sloth) (h (:p sloth))))
@@ -82,17 +91,26 @@
   (when (= target (:p sloth))
     sloth))
 
-(->
-  (loop [sloths [{:g 0 :p [0 0] :path []}]]
-    (if-let [finish (some is-finished? sloths)] finish
-      (let [p-sloth (apply min-key f sloths)
-            new-sloths (->> (n-for-sloth p-sloth)
-                            (remove (fn [sloth] (@visited-nodes (:p sloth)))))]
-        (swap! visited-nodes into (map :p new-sloths))
-        (recur (->> sloths
-                    (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
-                    (concat new-sloths))))))
-  (#(conj (:path %) (:p %)))
-  (#(render empty-map % \O))
-  (render walls \#)
-  (draw))
+(def wait (atom 10))
+
+(defn run-loop []
+  (->
+    (loop [sloths [{:g 0 :p [0 0] :path []}]]
+      ; (->
+      ;   (render empty-map (map :p sloths) "\uD83E\uDDA5")
+      ;   (render walls \#)
+      ;   (draw))
+      ; (Thread/sleep @wait)
+      (if-let [finish (some is-finished? sloths)] finish
+        (let [p-sloth (apply min-key f sloths)
+              new-sloths (->> (n-for-sloth p-sloth)
+                              (remove (fn [sloth] (walls (:p sloth))))
+                              (remove (fn [sloth] (@visited-nodes (:p sloth)))))]
+          (swap! visited-nodes into (map :p new-sloths))
+          (recur (->> sloths
+                      (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
+                      (concat new-sloths))))))))
+    ; (#(conj (:path %) (:p %)))
+    ; (#(render empty-map % \O))
+    ; (render walls \#)
+    ; (draw)))
