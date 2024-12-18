@@ -1,6 +1,7 @@
 (ns rest-of-advent-24.day-18
   (:require
-   [clojure.string :refer [join split split-lines]]))
+   [clojure.string :refer [join split split-lines]]
+   [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def file
   (->> (slurp "resources/day-18-input.txt")
@@ -34,7 +35,8 @@
       (>= y height)))
 
 (def empty-map
-  (-> (vec (repeat height (vec (repeat width \.))))))
+  (vec
+    (repeat height (vec (repeat width \.)))))
 
 (defn render [mmm things pencil]
   (->> things
@@ -42,7 +44,18 @@
        (reduce (fn [map' thing] (assoc-in map' thing pencil)) mmm)))
 
 (defn draw [map*]
-  (println (str "\033[2J\033[H" (join "\n" (mapv #(join " " %) map*)))))
+  (blk
+    (.write *out* "\033[2J\033[H")
+    (const output (StringBuilder.))
+    (doseq [line map*]
+      (doseq [char line]
+        (cond
+          (= char \S) (.append output "\uD83E\uDDA5")
+          (= char \.) (.append output "  ")
+          :else       (.append output (str " " char))))
+      (.append output "\n"))
+    (.write *out* (.toString output))
+    (.flush *out*)))
 
 
 (defn h [n]
@@ -94,12 +107,12 @@
 (def wait (atom 10))
 
 (defn run-loop []
-  (->
+  (time
     (loop [sloths [{:g 0 :p [0 0] :path []}]]
-      ; (->
-      ;   (render empty-map (map :p sloths) "\uD83E\uDDA5")
-      ;   (render walls \#)
-      ;   (draw))
+      (->
+        (render empty-map (map :p sloths) \S)
+        (render walls \#)
+        (draw))
       ; (Thread/sleep @wait)
       (if-let [finish (some is-finished? sloths)] finish
         (let [p-sloth (apply min-key f sloths)
@@ -110,7 +123,3 @@
           (recur (->> sloths
                       (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
                       (concat new-sloths))))))))
-    ; (#(conj (:path %) (:p %)))
-    ; (#(render empty-map % \O))
-    ; (render walls \#)
-    ; (draw)))
