@@ -260,11 +260,11 @@
 (time
   (loop [as [(bigint 0)]
          memory (reverse (:memory corrupted-computer))]
-    (if (empty? memory) 
+    (if (empty? memory)
       as
-      (let [current-m (first memory)] 
+      (let [current-m (first memory)]
         (recur (mapcat (fn [a] (backwards* a current-m)) as)
-               (rest memory)))))) 
+               (rest memory))))))
 
 ; 236581108670061
 ; 236581108670143
