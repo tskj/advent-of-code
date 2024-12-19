@@ -119,32 +119,48 @@
 (defn f [sloth]
   (+ (:g sloth) (h (:p sloth))))
 
-(def visited-nodes (atom #{[0 0]}))
-
 (defn is-finished? [sloth]
   (when (= target (:p sloth))
     sloth))
 
 (def wait (atom 10))
 
+(def fast (atom {}))
+(defn sp [sloth]
+  (if-let [pre-calc (@fast (:p (sloth)))] pre-calc
+    (let [visited-nodes (atom #{(:p sloth)})]
+      (loop [sloths [sloth]]
+        (if-let [finish (some is-finished? sloths)]
+          (do
+            (swap! fast assoc (:p sloth) (:g finish))
+            (:g finish))
+          (let [p-sloth (apply min-key f sloths)
+                new-sloths (->> (n-for-sloth p-sloth)
+                                (remove (fn [sloth] (walls (:p sloth))))
+                                (remove (fn [sloth] (@visited-nodes (:p sloth)))))]
+            (swap! visited-nodes into (map :p new-sloths))
+            (recur (->> sloths
+                        (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
+                        (concat new-sloths)))))))))
+
+(defn f* [sloth]
+  (+ (:g sloth) (sp (assoc sloth :g 0))))
+
 (defn run-loop []
   (time
-    (loop [sloths [{:g 0 :p [0 0] :path []}]
-           i 0]
-      ; (-> (empty-map)
-      ;     (render (map :p sloths) \S)
-      ;     (render walls \#)
-      ;     (persistent!)
-      ;     (draw))
-      (when (= (mod i 2) 0)
-        (draw-everything (set (map :p sloths)) walls))
-      (if-let [finish (some is-finished? sloths)] [i finish]
-        (let [p-sloth (apply min-key f sloths)
-              new-sloths (->> (n-for-sloth p-sloth)
-                              (remove (fn [sloth] (walls (:p sloth))))
-                              (remove (fn [sloth] (@visited-nodes (:p sloth)))))]
-          (swap! visited-nodes into (map :p new-sloths))
-          (recur (->> sloths
-                      (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
-                      (concat new-sloths))
-                 (inc i)))))))
+    (let [visited-nodes (atom #{[0 0]})]
+      (loop [sloths [{:g 0 :p [0 0] :path []}]
+             i 0]
+        (when (= (mod i 2) 0)
+          (draw-everything (set (map :p sloths)) walls))
+
+        (if-let [finish (some is-finished? sloths)] [i finish]
+          (let [p-sloth (apply min-key f* sloths)
+                new-sloths (->> (n-for-sloth p-sloth)
+                                (remove (fn [sloth] (walls (:p sloth))))
+                                (remove (fn [sloth] (@visited-nodes (:p sloth)))))]
+            (swap! visited-nodes into (map :p new-sloths))
+            (recur (->> sloths
+                        (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
+                        (concat new-sloths))
+                   (inc i))))))))
