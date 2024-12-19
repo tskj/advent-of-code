@@ -1,6 +1,7 @@
 (ns rest-of-advent-24.day-19
   (:require
-   [clojure.string :refer [split split-lines starts-with?]]))
+   [clojure.string :refer [split split-lines starts-with?]]
+   [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def file
   (->> "gub, wuu, uwur, uru, uuw, wgug, grg, ru, gbggurw, brwwu, wr, bgguw, wurbgwug, rgbrb, bguguub, uug, guggr, wgrubr, bwuwr, ubgw, ubu, gruub, bbwguug, gubgbrbb, bwgg, bgr, bwg, uuwgw, uuub, rbg, uwbgw, bg, rruuwgr, brb, rbrg, brrbwur, wuwgb, rg, rgwg, ugg, wubu, ggurrr, rrw, burwubub, gggu, bwwg, ggwr, gwr, ug, urgw, gwb, bruu, brr, rgg, rwrr, gwbr, wrg, uugr, bbrbb, bbur, uwuub, wrbbgb, bwb, wuburbw, gwbuw, wuuugb, urrw, gwwwur, wwwrrg, wrrrr, gwbgb, guw, wub, wgbbb, ub, gbg, rrbbgwgb, bwubru, brub, urwur, uruu, wwgubb, ubgbbgu, gwgwwbu, guubwr, bbwwb, ggrw, uwr, wbrubu, wwu, gbuu, rbgrguw, bbb, bwgw, gur, rruwgu, rrb, rrrg, ggbw, gugugwr, rbw, gbr, rbu, brgbw, uubgb, rw, ugwgwr, bbu, ugwub, wwr, rwg, bur, uubr, bubgu, guurr, wbwggwgu, brbguug, wgr, bgrwu, bgbrugw, rguggw, gbubb, wwg, rbrgb, wurww, ggbg, bbgu, wgurg, uwwr, rbr, rgrw, uggbug, brrbw, uwg, bururg, wrubgu, gbgbu, wrru, rurbg, gb, gubwbg, uguur, uggw, uurrwrgg, uwwgrgw, ubugu, wwwu, gbrrbg, wrwb, rur, wubugr, rbb, wbbubgw, rugguwb, rwu, rgwwbg, brw, wbg, b, uuwu, rgw, gurrbu, gwrw, bgwuw, ubgwu, rgu, ggubbguu, rruwb, gbww, gugbg, rww, wuw, wburrb, bgb, grgwwbgw, bubrrww, bgu, ugwu, wruw, wgur, bbgb, ugwbwrr, rgr, ubbg, grr, uu, wu, wwrwrw, rbgwb, gww, ugu, uurubb, gruwb, buuuw, urg, ur, bwu, bbwu, ruw, ubguwrgb, bggug, wuwu, brrbrbr, gbubwrrr, bwwwrg, ggg, grw, rbwbgggw, ubr, ggr, grbbrw, brgg, ubrww, urb, wgbr, urr, bgrr, rgb, buu, ubg, bub, rwbgwbw, buuu, buuwbg, wbu, ggu, gwgrb, rwr, wwuu, bru, uuugbw, gwrbbgb, gbrrbbr, brwgwurw, rbgb, rubwrub, uwguuuu, wbgu, ruwu, wwbbwg, bgwrgb, wuwbwb, rbrr, bbrgr, wgrub, guwggw, rggwugw, rggubrr, wgurgg, rgbr, wbur, ubuu, urrbuu, ruuwgwuu, uguw, wgbrg, bgwr, wrgub, wrub, wrbuuwu, wgb, ubw, wrrg, uww, burggwgu, uwu, rgwwr, wru, wgg, br, wwb, urbw, wwrwu, gguguw, r, bbrwrw, buurr, gwgu, rr, rrr, ugw, bug, bubr, wgrwwr, ugb, brg, guwuw, rgrggw, bgrguwuu, gwg, guug, ubgguwu, grrwg, grwr, bbggruu, buru, ww, uwgggwu, wbrur, wrgr, u, bbgg, rwugw, wgu, wbbbug, gwwwb, bwwuu, ruwr, urbb, wurrr, gug, uw, ubgrgw, rbbr, grb, wrr, bww, bb, rguwwb, rru, ubbgwu, bgbr, gbwu, buuw, ubww, wrb, ugrwr, g, rbug, gbbgbuug, bu, wwrb, ubwg, ugr, rburub, bgugr, wug, ubbugbgg, gbur, uuu, grrwrw, guu, ggww, rrrgbb, gugrgu, www, wur, uugg, bgurb, gu, uwuurgu, rbuurwwr, rurw, wbrbb, bgg, bwbgbbw, ubgwb, wgbg, gwrbr, rwwur, rbrgw, uggur, wgw, uwb, grrgr, ruu, bwug, uwwwwu, ruguu, buw, buug, bbr, gugwg, gbb, guwgr, gbbrbbb, wuggwb, ugwrwbg, gwrr, urgb, gwu, rbwrbgbr, bwrbbww, rrbwr, wbr, rggrur, ggb, gwrgr, gbggu, rruubw, ggrubb, rbgg, bwwbu, wwgbuwu, gbu, wg, rwbwr, rub, brgu, uuug, uub, rbgwr, urgu, wbb, gbw, bbrggrw, bw, rrug, wwwrubrr, gbgu, bubwbgu, ggbb, gwbu, rb, rug, urwgb, gru, rwwrg, wuuugr, uuburu, urw, ruug, uwwuwuu, bggg, bwr, ubb, gr, rbbgg, bbugw, bbruub, bgw, rgurgu, rrg, ubgugr, bgrb, bwrugb, bubw, gw, wbuugr, rwb, brgurw, rbbuwg, gbbwwub, wrw, rrubb, gwgw, ruburru"
@@ -414,24 +415,27 @@ wggbbrguwwwgbrgrguggwrgwgubbruwubbubrbrwggbuwgrwbrur"
 (def cache (atom {}))
 
 (defn check [word]
-  (if (empty? word)
-    1
-    (if-let [result (@cache word)]
-      result
-
-      (loop [unchecked-words file
-             number-so-far 0]
+  (blk
+    (if (empty? word) (return 1))
+    (if-let [result (@cache word)] (return result))
+    (loop [unchecked-words file
+           number-so-far 0]
+      (blk
         (if (empty? unchecked-words)
-            (do
-              (swap! cache assoc word number-so-far)
-              number-so-far)
-            (let [towel-to-check (first unchecked-words)
-                  does-work? (starts-with? word towel-to-check)]
-              (if (not does-work?)
-                (recur (rest unchecked-words)
-                       number-so-far)
-                (let [how-many-times (check (subs word (count towel-to-check)))]
-                  (recur (rest unchecked-words)
-                         (+ number-so-far how-many-times))))))))))
+            (return (do
+                      (swap! cache assoc word number-so-far)
+                      number-so-far)))
+
+        (const towel-to-check (first unchecked-words))
+        (const does-work? (starts-with? word towel-to-check))
+
+        (if (not does-work?)
+          (return (recur (rest unchecked-words)
+                       number-so-far)))
+
+        (const how-many-times (check (subs word (count towel-to-check))))
+
+        (recur (rest unchecked-words)
+               (+ number-so-far how-many-times))))))
 
 (reduce + (map check thing))
