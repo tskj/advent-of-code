@@ -157,7 +157,7 @@
       (if (empty? sloths) nil
         (do
 
-            ; (let [sloth-ps   (map :p sloths)
+          ; (let [sloth-ps   (map :p sloths)
           ;       set-sloths (set sloth-ps)]
           ;   (assert (= (count sloth-ps)
           ;              (count set-sloths)) "multiple sloths in same tile!!"))
@@ -188,6 +188,6 @@
         (do
           (when (= (mod i 100) 0)
             (draw-everything (set (:path sloth)) (set bytes))
-            (println "we are at iteration" i)) 
+            (println "we are at iteration" i))
           (recur (inc i)))
         (println "finished with this byte:" (last bytes) " which was number:" i)))))
