@@ -1,6 +1,7 @@
 (ns rest-of-advent-24.day-18
   (:require
-   [clojure.string :refer [join split split-lines]]
+   [clojure.math :as math]
+   [clojure.string :refer [split split-lines]]
    [rest-of-advent-24.utils.macros :refer [blk]]))
 
 (def file
@@ -34,36 +35,56 @@
       (>= x width)
       (>= y height)))
 
-(def empty-map
-  (vec
-    (repeat height (vec (repeat width \.)))))
+(defn empty-map []
+  (transient (vec (repeat (* width height) \.))))
 
 (defn render [mmm things pencil]
   (->> things
-       (mapv (fn [[x y]] [y x]))
-       (reduce (fn [map' thing] (assoc-in map' thing pencil)) mmm)))
+       (reduce (fn [map' [x y]] (assoc! map' (+ (* y width) x) pencil)) mmm)))
 
 (defn draw [map*]
   (blk
     (.write *out* "\033[2J\033[H")
-    (const output (StringBuilder.))
-    (doseq [line map*]
-      (doseq [char line]
-        (cond
-          (= char \S) (.append output "\uD83E\uDDA5")
-          (= char \.) (.append output "  ")
-          :else       (.append output (str " " char))))
+    (.flush *out*)
+    (const output (StringBuilder. (* 4 width height)))
+    (doseq [y (range height)]
+      (doseq [x (range width)]
+        (let [char (get map* (+ (* y height) x))]
+          (cond
+            (= char \S) (.append output "\uD83E\uDDA5")
+            (= char \.) (.append output "  ")
+            :else       (.append output (str " " char)))))
       (.append output "\n"))
     (.write *out* (.toString output))
     (.flush *out*)))
 
 
+(def draw-calls (atom 0))
+(defn draw-everything [sloth? wall?]
+    (blk
+      (swap! draw-calls inc)
+      (.write *out* "\033[2J\033[H")
+      (.flush *out*)
+      (const output (StringBuilder. (* 4 width height)))
+      (dotimes [y height]
+        (dotimes [x width]
+          (let [c [x y]]
+            (cond
+              (sloth? c) (.append output "\uD83E\uDDA5")
+              (wall? c)  (.append output " #")
+              :else      (.append output "  "))))
+        (.append output "\n"))
+      (.write *out* (.toString output))
+      (.flush *out*)))
+
+
 (defn h [n]
-  0)
-  ; (let [[x y] n
-  ;       [x* y*] target]
-  ;   (+ (- x* x)
-  ;      (- y* y))))
+  (let [[x y] n
+        [x* y*] target]
+    ; (+ (- x* x)
+    ;    (- y* y))))
+    (math/sqrt (+ (* (- x* x) (- x* x))
+                  (* (- y* y) (- y* y))))))
 
 (defn advance-sloth-up [sloth]
   (-> sloth
@@ -108,13 +129,16 @@
 
 (defn run-loop []
   (time
-    (loop [sloths [{:g 0 :p [0 0] :path []}]]
-      (->
-        (render empty-map (map :p sloths) \S)
-        (render walls \#)
-        (draw))
-      ; (Thread/sleep @wait)
-      (if-let [finish (some is-finished? sloths)] finish
+    (loop [sloths [{:g 0 :p [0 0] :path []}]
+           i 0]
+      ; (-> (empty-map)
+      ;     (render (map :p sloths) \S)
+      ;     (render walls \#)
+      ;     (persistent!)
+      ;     (draw))
+      (when (= (mod i 2) 0)
+        (draw-everything (set (map :p sloths)) walls))
+      (if-let [finish (some is-finished? sloths)] [i finish]
         (let [p-sloth (apply min-key f sloths)
               new-sloths (->> (n-for-sloth p-sloth)
                               (remove (fn [sloth] (walls (:p sloth))))
@@ -122,4 +146,5 @@
           (swap! visited-nodes into (map :p new-sloths))
           (recur (->> sloths
                       (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
-                      (concat new-sloths))))))))
+                      (concat new-sloths))
+                 (inc i)))))))
