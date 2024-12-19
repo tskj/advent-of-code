@@ -16,7 +16,7 @@
     [[6 count] [8 count]]
     [[(dec fish) count]]))
 
-(def days-to-simulate (dec 256))
+(def days-to-simulate 256)
 
 (->>
   (group-by first [[6 3] [8 3] [0 1] [8 1]])
@@ -25,14 +25,14 @@
 (def fishies
   (loop [counts (frequencies initial-fish)
          day 0]
-    (let [updated-fishies (->> (mapcat update-fish counts)
-                               (group-by first)
-                               (map (fn [[k v]] [k (reduce + (map second v))]))
-                               (into {}))]
-      (if (<= days-to-simulate day)
-        updated-fishies
-        (recur
-         updated-fishies
-         (inc day))))))
+    (if (<= days-to-simulate day)
+      counts
+      (let [updated-fishies (->> (mapcat update-fish counts)
+                                 (group-by first)
+                                 (map (fn [[k v]] [k (reduce + (map second v))]))
+                                 (into {}))]
+          (recur
+           updated-fishies
+           (inc day))))))
 
 (reduce + (map second fishies))
