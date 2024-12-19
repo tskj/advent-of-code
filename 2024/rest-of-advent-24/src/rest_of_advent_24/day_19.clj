@@ -411,26 +411,27 @@ wggbbrguwwwgbrgrguggwrgwgubbruwubbubrbrwggbuwgrwbrur"
               (remove empty?)
               (vec)))
 
-(def cache (atom #{}))
+(def cache (atom {}))
 
 (defn check [word]
   (if (empty? word)
-    true
-    (if (@cache word)
-      true
+    1
+    (if-let [result (@cache word)]
+      result
 
-      (loop [unchecked-words file]
+      (loop [unchecked-words file
+             number-so-far 0]
         (if (empty? unchecked-words)
-            false
+            (do
+              (swap! cache assoc word number-so-far)
+              number-so-far)
             (let [towel-to-check (first unchecked-words)
                   does-work? (starts-with? word towel-to-check)]
               (if (not does-work?)
-                (recur (rest unchecked-words))
-                (let [does-rest-work? (check (subs word (count towel-to-check)))]
-                  (if does-rest-work?
-                    (do
-                      (swap! cache conj word)
-                      true)
-                    (recur (rest unchecked-words)))))))))))
+                (recur (rest unchecked-words)
+                       number-so-far)
+                (let [how-many-times (check (subs word (count towel-to-check)))]
+                  (recur (rest unchecked-words)
+                         (+ number-so-far how-many-times))))))))))
 
-(count (filter true? (map check thing)))
+(reduce + (map check thing))
