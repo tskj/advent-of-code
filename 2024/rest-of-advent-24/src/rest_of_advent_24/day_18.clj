@@ -27,7 +27,12 @@
        (mapv #(split % #","))
        (mapv #(mapv parse-long %))))
 
-(def walls (set incoming-bytes))
+(def all-bytes
+  (->> file
+       (rest)
+       (rest)
+       (mapv #(split % #","))
+       (mapv #(mapv parse-long %))))
 
 (defn is-out-of-bounds? [[x y]]
   (or (< x 0)
@@ -65,7 +70,7 @@
       (swap! draw-calls inc)
       (.write *out* "\033[2J\033[H")
       (.flush *out*)
-      (const output (StringBuilder. (* 4 width height)))
+      (const output (StringBuilder.))
       (dotimes [y height]
         (dotimes [x width]
           (let [c [x y]]
@@ -83,9 +88,9 @@
         [x* y*] target]
     ; (+ (- x* x)
     ;    (- y* y))))
-    ; (math/sqrt (+ (* (- x* x) (- x* x))
-    ;               (* (- y* y) (- y* y))))))
-    0))
+    (math/sqrt (+ (* (- x* x) (- x* x))
+                  (* (- y* y) (- y* y))))))
+    ; 0))
 
 (defn advance-sloth-up [sloth]
   (-> sloth
@@ -143,28 +148,46 @@
                 (map (fn [[k v]] v)))))
 
 
+(def initial-sloth {:g 0 :p [0 0] :path []})
+
+(defn run-A* [sloth walls]
+  (let [visited-nodes (atom {[0 0] 0})]
+    (loop [sloths [sloth]
+           i 0]
+      (if (empty? sloths) nil
+        (do
+
+            ; (let [sloth-ps   (map :p sloths)
+          ;       set-sloths (set sloth-ps)]
+          ;   (assert (= (count sloth-ps)
+          ;              (count set-sloths)) "multiple sloths in same tile!!"))
+
+          ; (when (= (mod i 1) 0)
+          ;   (draw-everything (set (map :p sloths)) walls))
+
+          (if-let [finish (some is-finished? sloths)] [i finish] ;; on your face
+            (let [p-sloth (apply min-key f sloths)
+                  new-sloths (->> (n-for-sloth p-sloth)
+                                  (remove (fn [sloth] (walls (:p sloth))))
+                                  (remove (fn [sloth] (if-let [node (@visited-nodes (:p sloth))]
+                                                        (<= node (:g sloth))
+                                                        false))))]
+              (swap! visited-nodes into (map (fn [sloth] [(:p sloth) (:g sloth)]) new-sloths))
+              (recur (->> sloths
+                          (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
+                          (concat new-sloths)
+                          (dedup-overlapping-sloths))
+                     (inc i)))))))))
+
 (defn run-loop []
-  (time
-    (let [visited-nodes (atom {[0 0] 0})]
-      (loop [sloths [{:g 0 :p [0 0] :path []}]
-             i 0]
-
-        (let [sloth-ps (map :p sloths)
-              set-sloths (set sloth-ps)]
-          (assert (= (count sloth-ps) (count set-sloths)) "multiple sloths in same tile!!"))
-        (when (= (mod i 2) 0)
-          (draw-everything (set (map :p sloths)) walls))
-
-        (if-let [finish (some is-finished? sloths)] [i finish]
-          (let [p-sloth (apply min-key f sloths)
-                new-sloths (->> (n-for-sloth p-sloth)
-                                (remove (fn [sloth] (walls (:p sloth))))
-                                (remove (fn [sloth] (if-let [node (@visited-nodes (:p sloth))]
-                                                      (<= node (:g sloth))
-                                                      false))))]
-            (swap! visited-nodes into (map (fn [sloth] [(:p sloth) (:g sloth)]) new-sloths))
-            (recur (->> sloths
-                        (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
-                        (concat new-sloths)
-                        (dedup-overlapping-sloths))
-                   (inc i))))))))
+  (loop [i 1024]
+    (let [bytes (take i all-bytes)
+          walls (set bytes)
+          r (run-A* initial-sloth walls)]
+      (if-let [[_ sloth] r]
+        (do
+          (when (= (mod i 100) 0)
+            (draw-everything (set (:path sloth)) (set bytes))
+            (println "we are at iteration" i)) 
+          (recur (inc i)))
+        (println "finished with this byte:" (last bytes) " which was number:" i)))))
