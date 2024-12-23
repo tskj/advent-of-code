@@ -439,3 +439,37 @@ wggbbrguwwwgbrgrguggwrgwgubbruwubbubrbrwggbuwgrwbrur"
                (+ number-so-far how-many-times))))))
 
 (reduce + (map check thing))
+
+(def check-4
+  (memoize
+    (fn [word]
+      (blk
+        (if (empty? word) (return 1))
+        (loop [unchecked-words file
+               n 0]
+          (blk
+            (if (empty? unchecked-words) (return n))
+
+            (const [head & tail] unchecked-words)
+            (const result (if (starts-with? word head) 
+                            (check-4 (subs word (count head))) 
+                            0))
+
+            (recur tail
+                   (+ n result))))))))
+
+(reduce + (map check-4 thing))
+
+(def check2 (memoize (fn [word] 
+                       (if (empty? word) 1
+                           (->> file (map #(if (starts-with? word %) (check2 (subs word (count %))) 0))
+                                     (reduce +))))))
+
+(reduce + (map check2 thing))
+
+(def check3 (memoize (fn [word] 
+                       (if (empty? word) true
+                           (->> file (map #(and (starts-with? word %) (check3 (subs word (count %)))))
+                                     (some true?))))))
+
+(count (filter true? (map check3 thing)))

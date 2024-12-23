@@ -122,6 +122,16 @@
     (mapv (fn [f] (f sloth)))
     (remove (fn [sloth] (is-out-of-bounds? (:p sloth))))))
 
+
+(def walls (set (take 1024 all-bytes)))
+
+(defn expand-sloth [sloth]
+  (->>
+    [advance-sloth-up advance-sloth-right advance-sloth-down advance-sloth-left]
+    (mapv (fn [f] (f sloth)))
+    (remove (fn [sloth] (is-out-of-bounds? (:p sloth))))
+    (remove (fn [sloth] (walls (:p sloth))))))
+
 (defn f [sloth]
   (+ (:g sloth) (h (:p sloth))))
 
@@ -155,16 +165,6 @@
     (loop [sloths [sloth]
            i 0]
       (if (empty? sloths) nil
-        (do
-
-          ; (let [sloth-ps   (map :p sloths)
-          ;       set-sloths (set sloth-ps)]
-          ;   (assert (= (count sloth-ps)
-          ;              (count set-sloths)) "multiple sloths in same tile!!"))
-
-          ; (when (= (mod i 1) 0)
-          ;   (draw-everything (set (map :p sloths)) walls))
-
           (if-let [finish (some is-finished? sloths)] [i finish] ;; on your face
             (let [p-sloth (apply min-key f sloths)
                   new-sloths (->> (n-for-sloth p-sloth)
@@ -177,7 +177,7 @@
                           (remove (fn [sloth] (= (:p p-sloth) (:p sloth))))
                           (concat new-sloths)
                           (dedup-overlapping-sloths))
-                     (inc i)))))))))
+                     (inc i))))))))
 
 (defn run-loop []
   (loop [i 1024]
@@ -191,3 +191,38 @@
             (println "we are at iteration" i))
           (recur (inc i)))
         (println "finished with this byte:" (last bytes) " which was number:" i)))))
+
+(defn A*
+  ([sloths expand get-score get-node finished?]
+   (A* (->> sloths
+            (map (fn [sloth] [(get-node sloth) sloth]))
+            (into {}))
+       sloths expand get-score get-node finished? 1))
+  ([visited-nodes sloths expand get-score get-node finished? recr]
+   (lazy-seq
+     (println "calling A*")
+     (let [visited-nodes (atom visited-nodes)]
+       (loop [sloths sloths]
+         (blk
+           (if (empty? sloths) (return nil))
+           (if-let [finish (first (filter finished? sloths))]
+              (return (do
+                        (println "finish 1" (select-keys  finish (vector :p :g)) (map #(select-keys  % (vector :p :g)) sloths))
+                        (cons finish (A* @visited-nodes (remove #(= finish %) sloths) expand get-score get-node finished? 2)))))
+
+           ; (when (= recr 2)
+           ;  (println "looping with sloths count" (count sloths)))
+
+           (const p-sloth (apply min-key get-score sloths))
+           (const new-sloths (->> (expand p-sloth)
+                                  (remove (fn [sloth] (if-let [node (@visited-nodes (get-node sloth))]
+                                                        (<= (get-score node) (get-score sloth))
+                                                        false)))))
+
+           (swap! visited-nodes into (map (fn [sloth] [(get-node sloth) sloth]) new-sloths))
+
+           (recur (->> sloths
+                       (remove #(= p-sloth %))
+                       (concat new-sloths)))))))))
+
+(take 3 (A* [initial-sloth] expand-sloth f #(:p %) is-finished?))
