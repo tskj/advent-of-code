@@ -92,29 +92,32 @@
                   (* (- y* y) (- y* y))))))
     ; 0))
 
+(defn add-to-every [a n]
+  (set (map #(conj % n) a)))
+
 (defn advance-sloth-up [sloth]
   (-> sloth
       (update-in [:p 1] dec)
       (update-in [:g] inc)
-      (update-in [:path] conj (:p sloth))))
+      (update-in [:path] add-to-every (:p sloth))))
 
 (defn advance-sloth-right [sloth]
   (-> sloth
       (update-in [:p 0] inc)
       (update-in [:g] inc)
-      (update-in [:path] conj (:p sloth))))
+      (update-in [:path] add-to-every (:p sloth))))
 
 (defn advance-sloth-down [sloth]
   (-> sloth
       (update-in [:p 1] inc)
       (update-in [:g] inc)
-      (update-in [:path] conj (:p sloth))))
+      (update-in [:path] add-to-every (:p sloth))))
 
 (defn advance-sloth-left [sloth]
   (-> sloth
       (update-in [:p 0] dec)
       (update-in [:g] inc)
-      (update-in [:path] conj (:p sloth))))
+      (update-in [:path] add-to-every (:p sloth))))
 
 (defn n-for-sloth [sloth]
   (->>
@@ -158,7 +161,7 @@
                 (map (fn [[k v]] v)))))
 
 
-(def initial-sloth {:g 0 :p [0 0] :path []})
+(def initial-sloth {:g 0 :p [0 0] :path #{[]}})
 
 (defn run-A* [sloth walls]
   (let [visited-nodes (atom {[0 0] 0})]
@@ -200,15 +203,12 @@
        sloths expand get-score get-node finished? 1))
   ([visited-nodes sloths expand get-score get-node finished? recr]
    (lazy-seq
-     (println "calling A*")
      (let [visited-nodes (atom visited-nodes)]
        (loop [sloths sloths]
          (blk
            (if (empty? sloths) (return nil))
            (if-let [finish (first (filter finished? sloths))]
-              (return (do
-                        (println "finish 1" (select-keys  finish (vector :p :g)) (map #(select-keys  % (vector :p :g)) sloths))
-                        (cons finish (A* @visited-nodes (remove #(= finish %) sloths) expand get-score get-node finished? 2)))))
+              (return (cons finish (A* @visited-nodes (remove #(= finish %) sloths) expand get-score get-node finished? 2))))
 
            ; (when (= recr 2)
            ;  (println "looping with sloths count" (count sloths)))
@@ -216,13 +216,32 @@
            (const p-sloth (apply min-key get-score sloths))
            (const new-sloths (->> (expand p-sloth)
                                   (remove (fn [sloth] (if-let [node (@visited-nodes (get-node sloth))]
-                                                        (<= (get-score node) (get-score sloth))
+                                                        (< (get-score node) (get-score sloth))
                                                         false)))))
 
-           (swap! visited-nodes into (map (fn [sloth] [(get-node sloth) sloth]) new-sloths))
+           (const murder-family (fn [sloth] (some (fn [new-sloth]
+                                                    (->> (:pat new-sloth)
+                                                         (mapcat (fn [a] (->> (:path sloth) (map (fn [b] [a b])))))
+                                                         (some (fn [[a b]]
+                                                                 (= a
+                                                                    (subvec b 0 (min (count b)
+                                                                                     (count a))))))))
+                                                  new-sloths)))
+
+           ;; merge paths if equal score
+           (const new-sloths (map (fn [new-sloth]
+                                    (let [node (@visited-nodes (get-node new-sloth))]
+                                      (if (and node (= (get-score node) (get-score new-sloth)))
+                                        (update new-sloth :path #(into % (:path node)))
+                                        new-sloth)))
+                                  new-sloths))
+
+           (doseq [sloth new-sloths]
+             (swap! visited-nodes assoc (get-node sloth) sloth))
 
            (recur (->> sloths
                        (remove #(= p-sloth %))
+                       (remove murder-family)
                        (concat new-sloths)))))))))
 
 (take 3 (A* [initial-sloth] expand-sloth f #(:p %) is-finished?))
